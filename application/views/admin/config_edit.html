@@ -1,0 +1,89 @@
+
+<div class="layui-layout layui-layout-admin pp-main">
+    <form class="layui-form pp-form" action="javascript:;" method="post" >  
+        <div class="layui-form-item">
+            <label class="layui-form-label">网站全称</label>
+            <div class="layui-input-inline width40">
+                <input type="text" name="web_name" id="web_name" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="<?=$web_info['web_name']?>">
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">网站关键字</label>
+            <div class="layui-input-inline width40">
+                <input type="text" name="keywords" id="keywords" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="<?=$web_info['keywords']?>">
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">网站标语</label>
+            <div class="layui-input-inline width40">
+                <input type="text" name="slogan" id="slogan" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="<?=$web_info['slogan']?>">
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">版权声明</label>
+            <div class="layui-input-inline width40">
+                <input type="text" name="copyright" id="copyright" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="<?=$web_info['copyright']?>">
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">网站描述</label>
+            <div class="layui-input-inline width40">
+                <textarea name="description"  placeholder="网站描述" class="layui-textarea"><?=$web_info['description']?></textarea>
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">底部信息</label>
+            <div class="layui-input-inline width40">
+                <textarea name="foot"  placeholder="底部信息" class="layui-textarea"><?=$web_info['foot']?></textarea>
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="sub">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="/static/layui/layui.js"></script>
+<script>
+    layui.use(['form','element','jquery','layer'], function(){
+        var form = layui.form;
+        var element = layui.element;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+
+        form.on('submit(sub)', function(data){
+            var form_data = data.field;
+            $.post('/admin/config/save', form_data, function (out) {
+                if (out.status == 0) {
+                    layer.msg(out.msg,{icon: 1},function () {
+                        window.location.reload();
+                    })
+                } else {
+                    layer.msg(out.msg)
+                }
+            }, "json");
+            return false;
+        });
+
+        element.render();
+
+    });
+</script>
+
