@@ -1,0 +1,71 @@
+<style>
+    .nav-title{
+        display: none;
+    }
+</style>
+
+<div class="layui-layout layui-layout-admin pp-main mt20">
+    <form class="layui-form pp-form" action="javascript:;" method="post" >  
+        <div class="layui-form-item">
+            <label class="layui-form-label">链接名称</label>
+            <div class="layui-input-inline width60">
+                <input type="text" name="link_name" id="link_name" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="<?=$link['link_name']?>">
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">链接地址</label>
+            <div class="layui-input-inline width60">
+                <input type="text" name="link_url" id="link_url" lay-verify="required" autocomplete="off" placeholder="http://www.haodaquan.com" class="layui-input" value="<?=$link['link_url']?>">
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-inline width20">
+                <input type="text" name="sort" id="sort" lay-verify="required" autocomplete="off" placeholder="http://www.haodaquan.com" class="layui-input" value="<?=$link['sort']?>">
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        <input type="hidden" name="id" id="id" value="<?=$link['id']?>">
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="sub">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="/static/layui/layui.js"></script>
+<script>
+    layui.use(['form','element','jquery','layer'], function(){
+
+        var form = layui.form;
+        var element = layui.element;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+
+        form.on('submit(sub)', function(data){
+            var form_data = data.field;
+            $.post('/admin/link/save', form_data, function (out) {
+                if (out.status == 0) {
+                    layer.msg("操作成功",{icon: 1},function () {
+                        window.parent.layer.closeAll();
+                        window.parent.location.reload();
+                    })
+                } else {
+                    layer.msg(out.msg)
+                }
+            }, "json");
+            return false;
+        });
+
+        element.render();
+
+    });
+</script>

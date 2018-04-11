@@ -4,7 +4,7 @@
 ** @Author: haodaquan
 ** @Date:   2018-04-07 09:44:59
 ** @Last Modified by:   haodaquan
-** @Last Modified time: 2018-04-07 17:49:36
+** @Last Modified time: 2018-04-11 13:13:17
 *************************************************************/
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 class MY_Model extends CI_Model
@@ -51,33 +51,25 @@ class MY_Model extends CI_Model
 		$query = $this->db_pp->query($sql);
 		$items = $query->result_array();
 		//dump($sql);
-		return $this->returnData(200,'success',$items,$totalCount);
+		return $this->list_data(0,'success',$items,$totalCount);
+	
 	}
 
 	/**
-	* [returnData 组成返回数据]
-	* @Author haodaquan
-	* @Date   2016-04-06
-	* @param  [type]     $status     [状态码，200，300，500]
-	* @param  [type]     $info       [状态信息]
-	* @param  [type]     $data       [返回信息]
-	* @param  [type]     $totalCount [查询时返回条数]
-	* @return [type]                 [返回数组]
-	*/
-	protected function returnData($status,$info,$items,$totalCount='')
+	 * [returnData 列表返回数据]
+	 * @param  [type] $status     [description]
+	 * @param  [type] $info       [description]
+	 * @param  [type] $items      [description]
+	 * @param  string $totalCount [description]
+	 * @return [type]             [description]
+	 */
+	protected function list_data($status,$info,$items,$totalCount=0)
 	{
 		$data = [];
-		$data['status']  = $status;
-		$data['message'] = $info;
-		if($totalCount==='')
-		{
-			$data['data'] = $items;
-		}else{
-		$data['data'] = array(
-		  'totalCount'=>$totalCount,
-		  'items'=>$items
-		  );
-		}
+		$data['code']  	= $status;
+		$data['msg'] 	= $info;
+		$data['data'] 	= $items;
+		$data['count'] 	= (int)$totalCount;
 		return $data;
 	}
 
@@ -92,8 +84,8 @@ class MY_Model extends CI_Model
 	{
 		$where = ' WHERE 1=1 ';
 		//查询分页
-		$limit = isset($param['limit']) ? $param['limit'] : 10;
-		$page  = isset($param['page']) ? $param['page'] : 1;
+		$limit = isset($param['limit']) ? (int)$param['limit'] : 10;
+		$page  = isset($param['page']) ? (int)$param['page'] : 1;
 		unset($param['page']);
 		unset($param['limit']);
 
@@ -129,7 +121,7 @@ class MY_Model extends CI_Model
 					break;
 			}
 		}
-		//dump(['where'=>$where,'orderby'=>$orderby,'page_size'=>$limit,'current_page'=>$page]);
+		// dump(['where'=>$where,'orderby'=>$orderby,'page_size'=>$limit,'current_page'=>$page]);
 		return ['where'=>$where,'orderby'=>$orderby,'page_size'=>$limit,'current_page'=>$page];
 
 	}

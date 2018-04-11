@@ -4,7 +4,7 @@
 ** @Author: haodaquan
 ** @Date:   2018-04-07 09:44:32
 ** @Last Modified by:   haodaquan
-** @Last Modified time: 2018-04-10 23:16:53
+** @Last Modified time: 2018-04-11 11:38:12
 *************************************************************/
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -13,6 +13,7 @@ class MY_Controller extends CI_Controller
 {
 	#页面数据
 	public $data = [];
+	public $module = 'home';
 
 	public function __construct($is_admin=true)
 	{
@@ -21,6 +22,7 @@ class MY_Controller extends CI_Controller
 			#后台
 			$this->load->model('public/user_model');
 			$this->data['user'] = $this->user_model->check_user();
+			$this->module = 'admin';
 		}
 		$this->data['version'] = time();
 		$this->data['web_info'] = $this->web_config();
@@ -35,7 +37,7 @@ class MY_Controller extends CI_Controller
 	}
 
 
-	public function ajaxReturn($data=[],$status=200,$messages="操作成功")
+	public function ajaxReturn($data=[],$status=0,$messages="操作成功")
 	{
 		echo  json_encode(
 			['status'=>$status,'msg'=>$messages,'data'=>$data]
@@ -55,4 +57,34 @@ class MY_Controller extends CI_Controller
         $this->load->view($content_file,$this->data);
         $this->load->view($model.'/footer.html',$this->data);
 	}
+
+	 /**
+     * [query 查询列表数据]
+     * @Author haodaquan
+     * @Date   2016-04-07
+     * @return [type]     [description]
+     */
+    public function query($requst_data)
+    {
+    	$model = $this->model_name;
+    	if (!isset($this->$model)) {
+    		$this->load->model($this->module.'/'.$model);
+    	}
+        $data  = $this->$model->queryList($requst_data);
+      	$listData  =  $this->listDataFormat($data);
+        echo json_encode($listData);
+    }
+
+    /**
+     * [listDataFormat 列表数据格式化,子类一般需要重写]
+     * @Author haodaquan
+     * @Date   2016-04-07
+     * @param  array      $data [description]
+     * @return [type]           [description]
+     */
+    public function listDataFormat($listData)
+    {
+        if(empty($listData)) return [];
+        return $listData;
+    }
 }

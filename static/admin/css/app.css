@@ -1,8 +1,8 @@
 /*
 * @Author: georgehao
 * @Date:   2018-04-08 09:50:56
-* @Last Modified by:   haodaquan
-* @Last Modified time: 2018-04-10 22:13:35
+* @Last Modified by:   george
+* @Last Modified time: 2018-04-11 12:54:01
 */
 
 .nav-title{
@@ -32,8 +32,16 @@
 	margin-left: 20px; 
 }
 
+.mt20{
+	margin-top: 20px !important;
+}
+
+.mt40{
+	margin-top: 40px !important;
+}
+
 .pp-main{
-	padding-top: 20px;
+/*	padding-top: 20px;*/
 	padding-left: 20px;
 	padding-right: 20px;
 }

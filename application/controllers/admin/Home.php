@@ -5,21 +5,17 @@
 ** @Author: haodaquan
 ** @Date:   2018-04-07 18:01:55
 ** @Last Modified by:   haodaquan
-** @Last Modified time: 2018-04-10 21:40:23
+** @Last Modified time: 2018-04-11 08:56:55
 *************************************************************/
 class Home extends MY_Controller
 {
-	public $user;
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('public/user_model');
-		$this->user = $this->user_model->check_user();
 	}
 
 	public function index()
 	{
-		$this->data['user']           = $this->user;
 		$this->load->view('admin/main.html',$this->data);
 	}
 

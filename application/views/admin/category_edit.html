@@ -1,0 +1,88 @@
+<style>
+    .nav-title{
+        display: none;
+    }
+</style>
+
+<div class="layui-layout layui-layout-admin pp-main mt20">
+    <form class="layui-form pp-form" action="javascript:;" method="post" >  
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-inline width60">
+                <input type="text" name="cate_name" id="cate_name" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="<?=$cate['cate_name']?>">
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">关键字</label>
+            <div class="layui-input-inline width60">
+                <input type="text" name="keywords" id="keywords" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="<?=$cate['keywords']?>">
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">描述</label>
+            <div class="layui-input-inline width60">
+                <textarea name="description"  placeholder="网站描述" class="layui-textarea"><?=$cate['description']?></textarea>
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-inline width20">
+                <input type="text" name="sort" id="sort" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="<?=$cate['sort']?>">
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">导航显示</label>
+            <div class="layui-input-inline width20">
+                <input type="radio" name="is_nav" value="1" title="是" <?php if($cate['is_nav']==1):?>checked<?php endif;?>>
+                <input type="radio" name="is_nav" value="0" title="否" <?php if($cate['is_nav']==0):?>checked<?php endif;?>>
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        <input type="hidden" name="id" id="id" value="<?=$cate['id']?>">
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="sub">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="/static/layui/layui.js"></script>
+<script>
+    layui.use(['form','element','jquery','layer'], function(){
+
+        var form = layui.form;
+        var element = layui.element;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+
+        form.on('submit(sub)', function(data){
+            var form_data = data.field;
+            $.post('/admin/category/save', form_data, function (out) {
+                if (out.status == 0) {
+                    layer.msg("操作成功",{icon: 1},function () {
+                        window.parent.layer.closeAll();
+                        window.parent.location.reload();
+                    })
+                } else {
+                    layer.msg(out.msg)
+                }
+            }, "json");
+            return false;
+        });
+
+        element.render();
+
+    });
+</script>

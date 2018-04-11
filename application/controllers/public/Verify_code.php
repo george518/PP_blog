@@ -4,7 +4,7 @@
 ** @Author: haodaquan
 ** @Date:   2018-04-07 17:09:50
 ** @Last Modified by:   haodaquan
-** @Last Modified time: 2018-04-10 23:14:22
+** @Last Modified time: 2018-04-11 08:48:46
 *************************************************************/
 
 class Verify_code extends MY_Controller
@@ -42,9 +42,9 @@ class Verify_code extends MY_Controller
 		    'word_length'   => 4,
 		    'font_size' => 16,
 		    'img_id'    => 'Imageid',
-		    'pool'      => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+		    'pool'      => '23456789abcdefhijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
 
-		    // White background and border, black text and red grid
+		    
 		    'colors'    => array(
 		        'background' => array(255, 255, 255),
 		        'border' => array(255, 255, 255),
@@ -54,7 +54,6 @@ class Verify_code extends MY_Controller
 		);
 
 		$cap = create_captcha($vals);
-
 		return $cap;
 	}
 }

@@ -4,7 +4,7 @@
 ** @Author: haodaquan
 ** @Date:   2018-04-07 12:08:45
 ** @Last Modified by:   haodaquan
-** @Last Modified time: 2018-04-07 19:24:55
+** @Last Modified time: 2018-04-11 15:59:41
 *************************************************************/
 
 /**
@@ -39,5 +39,20 @@ function dump($var, $echo=true, $label=null, $strict=true) {
     }else
         return $output;
 }
+
+
+/**
+ * [make_dir 创建文件夹]
+ * @Date   2016-06-30
+ * @param  string     $file_path [文件地址]
+ * @return [type]                [description]
+ */
+function make_dir($file_path)
+{
+    //$date_file_path = $file_path;
+    if (!is_dir($file_path)) return  mkdir($file_path,0777,true);
+    return true;
+}
+
 
 

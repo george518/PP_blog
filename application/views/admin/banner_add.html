@@ -1,0 +1,123 @@
+
+<div class="layui-layout layui-layout-admin pp-main mt20">
+    <form class="layui-form pp-form" action="javascript:;" method="post" >  
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题</label>
+            <div class="layui-input-inline width40">
+                <input type="text" name="title" id="title" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">网址</label>
+            <div class="layui-input-inline width40">
+                <input type="text" name="url" id="url" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-inline width20">
+                <input type="text" name="sort" id="sort" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="">
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-inline width20">
+                <input type="radio" name="status" value="1" title="禁用" >
+                <input type="radio" name="status" value="0" title="正常" checked>
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">封面图</label>
+            <div class="layui-input-inline width60">
+                <div class="layui-row">
+                    <div class="layui-col-xs6">
+                        <input type="text" name="img_src" id="img_src" lay-verify="img_src" autocomplete="off" placeholder="文件地址" readonly="" value="" class="layui-input">
+                    </div>
+                    <div class="layui-col-xs6">
+                        <div class="layui-upload">
+                            <a class="input-file input-fileup layui-btn layui-btn-primary" href="javascript:;">
+                                选择图片<input size="20" type="file" name="myfile" id="myfile">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div style="border: 1px solid #efeeff;width: 300px;height: 113px;margin-top:10px;"><img src="/static/admin/images/default.png" alt="图片" width="300" height="113" id="img_src_show"></div>
+            </div>
+            <div class="layui-form-mid layui-word-aux">752*280</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-inline width60">
+                <textarea name="detail"  placeholder="备注" class="layui-textarea"></textarea>
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="sub">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="/static/layui/layui.js"></script>
+<script>
+    layui.use(['form','element','jquery','layer','upload'], function(){
+
+        var form = layui.form;
+        var element = layui.element;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+
+        var upload = layui.upload;
+        upload.render({
+            elem: '#myfile'
+            ,url: '/public/upload/image'
+            ,auto: true //选择文件后不自动上传
+            ,exts: 'jpg|png|gif|jpeg'
+            ,data: {w:752,h:280,'file_path':'banner'}
+            ,done: function(res, index, upload){
+                //假设code=0代表上传成功
+                if(res.code == 0){
+                    $('#img_src').val(res.data.src);
+                    $('#img_src_show').attr('src',res.data.src);
+                }else{
+                    layer.msg(res.msg);
+                    return;
+                }
+            }
+            ,error: function(index, upload){
+                layer.msg("上传失败，请重新上传");
+                return;
+            }
+        });      
+
+        form.on('submit(sub)', function(data){
+            var form_data = data.field;
+            $.post('/admin/banner/save', form_data, function (out) {
+                if (out.status == 0) {
+                    layer.msg(out.msg,{icon: 1},function () {
+                        window.location.href="/admin/banner/index";
+                    })
+                } else {
+                    layer.msg(out.msg)
+                }
+            }, "json");
+            return false;
+        });
+
+        element.render();
+
+    });
+</script>
+<script src="/static/public/js/upload.js"></script>

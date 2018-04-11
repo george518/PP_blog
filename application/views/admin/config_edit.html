@@ -1,10 +1,18 @@
 
-<div class="layui-layout layui-layout-admin pp-main">
+<div class="layui-layout layui-layout-admin pp-main mt40">
     <form class="layui-form pp-form" action="javascript:;" method="post" >  
         <div class="layui-form-item">
             <label class="layui-form-label">网站全称</label>
             <div class="layui-input-inline width40">
                 <input type="text" name="web_name" id="web_name" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="<?=$web_info['web_name']?>">
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">网站简称</label>
+            <div class="layui-input-inline width40">
+                <input type="text" name="short_web_name" id="short_web_name" lay-verify="required" autocomplete="off" placeholder="" class="layui-input" value="<?=$web_info['short_web_name']?>">
             </div>
             <div class="layui-form-mid layui-word-aux">*</div>
         </div>

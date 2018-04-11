@@ -1,55 +1,55 @@
 
-    <div class="layui-layout layui-layout-admin pp-main">
-        <form class="layui-form pp-form" action="javascript:;" method="post" >  
-            <div class="layui-form-item">
-                <label class="layui-form-label">用户名</label>
-                <div class="layui-input-inline width20">
-                    <input type="text" name="user_name" id="user_name" lay-verify="required" autocomplete="off" placeholder="不超过5字" class="layui-input" value="<?=$user['user_name']?>">
-                </div>
-                <div class="layui-form-mid layui-word-aux">*</div>
+<div class="layui-layout layui-layout-admin pp-main mt40">
+    <form class="layui-form pp-form" action="javascript:;" method="post" >  
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-inline width20">
+                <input type="text" name="user_name" id="user_name" lay-verify="required" autocomplete="off" placeholder="不超过5字" class="layui-input" value="<?=$user['user_name']?>">
             </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
 
-            <div class="layui-form-item">
-                <label class="layui-form-label">登录名</label>
-                <div class="layui-input-inline width20">
-                    <input type="text" name="login_name" id="login_name" lay-verify="required" autocomplete="off" placeholder="英文" class="layui-input" value="<?=$user['login_name']?>">
-                </div>
-                <div class="layui-form-mid layui-word-aux">*</div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">登录名</label>
+            <div class="layui-input-inline width20">
+                <input type="text" name="login_name" id="login_name" lay-verify="required" autocomplete="off" placeholder="英文" class="layui-input" value="<?=$user['login_name']?>">
             </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
 
-            <div class="layui-form-item">
-                <label class="layui-form-label">原密码</label>
-                <div class="layui-input-inline width20">
-                    <input type="password" name="password" id="password" lay-verify="required" autocomplete="off" placeholder="6-12位，数字和字母组合" class="layui-input" value="">
-                </div>
-                <div class="layui-form-mid layui-word-aux"></div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">原密码</label>
+            <div class="layui-input-inline width20">
+                <input type="password" name="password" id="password" lay-verify="required" autocomplete="off" placeholder="6-12位，数字和字母组合" class="layui-input" value="">
             </div>
+            <div class="layui-form-mid layui-word-aux"></div>
+        </div>
 
-            <div class="layui-form-item">
-                <label class="layui-form-label">输入新密码</label>
-                <div class="layui-input-inline width20">
-                    <input type="password" name="password1" id="password1" lay-verify="required" autocomplete="off" placeholder="6-12位，数字和字母组合" class="layui-input" value="">
-                </div>
-                <div class="layui-form-mid layui-word-aux"></div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">输入新密码</label>
+            <div class="layui-input-inline width20">
+                <input type="password" name="password1" id="password1" lay-verify="required" autocomplete="off" placeholder="6-12位，数字和字母组合" class="layui-input" value="">
             </div>
+            <div class="layui-form-mid layui-word-aux"></div>
+        </div>
 
-            <div class="layui-form-item">
-                <label class="layui-form-label">再次输入</label>
-                <div class="layui-input-inline width20">
-                    <input type="password" name="password2" id="password2" lay-verify="required" autocomplete="off" placeholder="6-12位，数字和字母组合" class="layui-input" value="">
-                </div>
-                <div class="layui-form-mid layui-word-aux"></div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">再次输入</label>
+            <div class="layui-input-inline width20">
+                <input type="password" name="password2" id="password2" lay-verify="required" autocomplete="off" placeholder="6-12位，数字和字母组合" class="layui-input" value="">
             </div>
+            <div class="layui-form-mid layui-word-aux"></div>
+        </div>
 
-            
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit lay-filter="sub">保存</button>
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                </div>
+        
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="sub">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
+</div>
 
 <script src="/static/layui/layui.js"></script>
 <script>
