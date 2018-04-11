@@ -1,0 +1,57 @@
+<style>
+    .nav-title{
+        display: none;
+    }
+</style>
+
+<div class="layui-layout layui-layout-admin pp-main mt40">
+    <form class="layui-form pp-form" action="javascript:;" method="post" >  
+        <div class="layui-form-item">
+            <label class="layui-form-label">标签名称</label>
+            <div class="layui-input-inline width40">
+                <input type="text" name="tag_name" id="tag_name" lay-verify="required" autocomplete="off" placeholder="不超过8个字" class="layui-input" value="<?=$tag['tag_name']?>">
+            </div>
+        
+        </div>
+
+        
+
+        <input type="hidden" name="id" id="id" value="<?=$tag['id']?>">
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="sub">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="/static/layui/layui.js"></script>
+<script>
+    layui.use(['form','element','jquery','layer'], function(){
+
+        var form = layui.form;
+        var element = layui.element;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+
+        form.on('submit(sub)', function(data){
+            var form_data = data.field;
+            $.post('/admin/tag/save', form_data, function (out) {
+                if (out.status == 0) {
+                    layer.msg(out.msg,{icon: 1},function () {
+                        window.parent.layer.closeAll();
+                        window.parent.location.reload();
+                    })
+                } else {
+                    layer.msg(out.msg)
+                }
+            }, "json");
+            return false;
+        });
+
+        element.render();
+
+    });
+</script>

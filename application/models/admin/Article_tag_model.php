@@ -1,13 +1,12 @@
 <?php
-
 /************************************************************
 ** @Description: file
 ** @Author: george
-** @Date:   2018-04-11 16:16:48
+** @Date:   2018-04-11 13:36:30
 ** @Last Modified by:   george
-** @Last Modified time: 2018-04-11 16:17:14
+** @Last Modified time: 2018-04-11 13:36:50
 *************************************************************/
-class Tags_model extends MY_Model
+class Article_tag_model extends MY_Model
 {
 	protected $_table;
 	/**
@@ -16,6 +15,6 @@ class Tags_model extends MY_Model
 	public function __construct()
 	{
 		parent::__construct();
-		$this->_table = 'pp_banner';
+		$this->_table = 'pp_article_tag';
 	}
 }

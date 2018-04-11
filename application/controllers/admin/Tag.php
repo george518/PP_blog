@@ -7,7 +7,7 @@
 ** @Last Modified time: 2018-04-11 16:16:02
 *************************************************************/
 
-class Tags extends MY_Controller
+class Tag extends MY_Controller
 {
 
 	protected $model_name;
@@ -15,18 +15,19 @@ class Tags extends MY_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->model_name = "tags_model";
+		$this->model_name = "tag_model";
 	}
 
 	public function index()
 	{
 		$this->data['page_title'] = 'Tags列表';
-		$this->display('admin/tags_list.html');
+		$this->display('admin/tag_list.html');
 	}
 
 	public function table()
 	{
 		$post = $this->input->post();
+        $post['sort'] = 'is_top.desc';
         $post['status|='] = 0;
 		$this->query($post);
 	}
@@ -35,9 +36,8 @@ class Tags extends MY_Controller
     {
         if(empty($data)) return [];
         foreach ($data['data'] as $key => $value) {
-        	$data['data'][$key]['status'] = $value['status']==1 ? '暂停':'正常';
+            $data['data'][$key]['is_top_text'] = $value['is_top']==1 ? '<span class="layui-badge">顶</span>':'-';
         	$data['data'][$key]['add_time'] = date('Y-m-d H:i:s',$value['add_time']);
-        	$data['data'][$key]['img_src'] = '<img src="'.$value['img_src'].'">';
         }
         return $data;
     }
@@ -45,7 +45,7 @@ class Tags extends MY_Controller
     public function add()
     {
     	$this->data['page_title'] = '新增tags';
-    	$this->display('admin/tags_add.html');
+    	$this->display('admin/tag_add.html');
     }
 
     public function edit()
@@ -54,12 +54,13 @@ class Tags extends MY_Controller
     	$model = $this->model_name;
     	$id = $this->input->get('id');
     	$tags = $this->$model->getConditionData("*",'id='.(int)$id);
-    	$this->data['tags'] = $tags[0];
-    	$this->data['page_title'] = '编辑tags';
-    	$this->display('admin/tags_edit.html');
+    	$this->data['tag'] = $tags[0];
+    	$this->data['page_title'] = '编辑tag';
+    	$this->display('admin/tag_edit.html');
     }
 
-    public function del(){
+    public function del()
+    {
     	$this->load->model($this->module.'/'.$this->model_name);
     	$model = $this->model_name;
     	#判断tags下有无内容
@@ -73,6 +74,23 @@ class Tags extends MY_Controller
     	}else{
     		$this->ajaxReturn($result);
     	}
+    }
+
+    public function top()
+    {
+        $this->load->model($this->module.'/'.$this->model_name);
+        $model = $this->model_name;
+        $id = $this->input->post('id');
+        $top = $this->input->post('top');
+        $data['id'] = (int)$id;
+        $data['is_top'] = $top == 1 ? 0 : 1;
+        $result = $this->$model->editData($data,'id='.(int)$id);
+
+        if (!$result) {
+            $this->ajaxReturn($result,300,'操作失败');
+        }else{
+            $this->ajaxReturn($result);
+        }
     }
 
     public function save()
@@ -95,6 +113,17 @@ class Tags extends MY_Controller
         {
         	$this->ajaxReturn($result);
         }
+    }
+
+
+    /**
+     * [get_tags 获取全部tags]
+     * @return [type] [description]
+     */
+    public  function get_tags()
+    {
+        $data = $this->$model->getConditionData('*',' status=0',' is_top DESC');
+        $this->ajaxReturn($data);
     }
 
 }

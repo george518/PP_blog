@@ -1,0 +1,24 @@
+<!-- 弹出层时，用于隐藏 -->
+<style>
+    .nav-title{
+        display: none;
+    }
+</style>
+
+<div class="layui-layout layui-layout-admin pp-main mt20">
+    <?php foreach($tag as $k=>$v):?>
+        <button class="layui-btn layui-btn-primary layui-btn-xs" data-id="<?=$v['id']?>"><?=$v['tag_name']?></button>
+    <?php endforeach;?>
+</div>
+
+<script src="/static/layui/layui.js"></script>
+<script>
+    layui.use(['element','jquery'], function(){
+        var element = layui.element;
+        var $ = layui.jquery;
+
+        
+        element.render();
+
+    });
+</script>
