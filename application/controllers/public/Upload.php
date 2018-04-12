@@ -58,6 +58,41 @@ class Upload extends MY_Controller
         }
     }
 
+    public function image_md()
+    {
+        $file = 'editormd';
+        $fname = 'editormd-image-file';
+        if (isset($_FILES[$fname]) && count($_FILES[$fname])==5) {
+            $name     = $_FILES[$fname]['name']; 
+            $size     = $_FILES[$fname]['size']; 
+            $name_tmp = $_FILES[$fname]['tmp_name']; 
+           
+            if (empty($name)) $this->return_md_data(300,'您还未选择图片');
+            $type = strtolower(substr(strrchr($name, '.'), 1)); //获取文件类型 
+            if (!in_array($type, $this->allow_type)) $this->return_md_data(300,'请上传正确类型的图片！');
+            if ($size > $this->allow_size) $this->return_md_data(300,'图片大小已超过2M限制！');
+            
+            $imageInfo = $this->getImageInfo($name_tmp);
+            // if($width!=0 && $imageInfo['width']!=$width) $this->return_data(300,'图片宽度不符合要求！');
+            // if($height!=0 && $imageInfo['height']!=$height) $this->return_data(300,'图片高度不符合要求！');
+            $time = date('Y-m-d',time()); 
+            $path = $this->file_path.$file.'/'.$time.'/';
+            if(!is_dir($path)) make_dir($path);
+            $pic_name = time() . rand(10000, 99999) . "." . $type;//图片名称 
+            // $path_arr = explode('/', $file);
+            // $img_path = isset($path_arr[1]) ? '/'.$path_arr[1] : '';
+            $pic_url = $path . $pic_name;//上传后图片路径+名称
+            //$img_url = $img_path.'/'.$time.'/'.$pic_name; #访问名称
+            if (move_uploaded_file($name_tmp, $pic_url)) 
+            {
+                $this->return_md_data(0,'上传成功','/'.$pic_url,$pic_name);
+            } else 
+            { 
+                $this->return_md_data(300,'上传有误，请检查服务器配置！');
+            } 
+        }
+    }
+
     /**
      * [getImageInfo 获取图片信息]
      * @Author haodaquan
@@ -106,6 +141,29 @@ class Upload extends MY_Controller
     	];
     	echo json_encode($data);
     	exit();
+    }
+
+    /**
+     * [return_md_data description]
+     * @param  [type] $code     [description]
+     * @param  string $msg      [description]
+     * @param  string $src      [description]
+     * @param  string $img_name [description]
+     * @return [type]           [description]
+     */
+    private function return_md_data($code,$msg='',$src='',$img_name='')
+    {
+        $data = [
+            'success'=>$code,
+            'message'=>$msg,
+            'url'=>$src,
+            // 'data'=>[
+            //     'src'=>$src,
+            //     'img_name'=>$img_name
+            // ]
+        ];
+        echo json_encode($data);
+        exit();
     }
 
     
