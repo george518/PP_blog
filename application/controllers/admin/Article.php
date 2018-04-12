@@ -48,10 +48,6 @@ class Article extends MY_Controller
         		$data['data'][$key]['title'] = $data['data'][$key]['title'].$recommand_tag;
         	}
 
-        	// if($value['is_original']==1){
-        	// 	$data['data'][$key]['title'] = $data['data'][$key]['title'].$original_tag;
-        	// }
-
         	if($value['headline']==1){
         		$data['data'][$key]['title'] = $data['data'][$key]['title'].$top_tag;
         	}
@@ -74,8 +70,9 @@ class Article extends MY_Controller
     	$this->load->model($this->module.'/'.$this->model_name);
     	$model = $this->model_name;
     	$id = $this->input->get('id');
-    	$article = $this->$model->getConditionData("id,cate_name,is_nav,keywords,description,sort",'id='.(int)$id);
-    	$this->data['cate'] = $article[0];
+    	$article = $this->$model->getConditionData("*",'id='.(int)$id);
+    	$this->data['art'] = $article[0];
+    	$this->data['cate'] = $this->category_model->get_category();
     	$this->data['page_title'] = '编辑分类';
     	$this->display('admin/article_edit.html');
     }
@@ -91,7 +88,7 @@ class Article extends MY_Controller
     {
         $this->load->model($this->module.'/'.$this->model_name);
         $model = $this->model_name;
-        $this->data['img'] = $this->$model->getConditionData('distinct(img_src)','status=0',' id desc','50');
+        $this->data['img'] = $this->$model->getConditionData('distinct(img_src),id','status=0',' id desc','50');
         $this->display('admin/article_img_add.html');
     }
 
@@ -125,7 +122,7 @@ class Article extends MY_Controller
         $pattern = '/\s/';//去除空白
         $content = preg_replace($pattern, '', $detail);
         $form_data['detail'] =  mb_substr($content,0,150,'utf-8');
-        $form_data['content'] = $form_data['art-editormd-html-code'];
+        // $form_data['content'] = $form_data['art-editormd-html-code'];
         unset($form_data['art-editormd-html-code']);
 
         $id  = $type = 0;

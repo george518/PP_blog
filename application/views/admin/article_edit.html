@@ -1,0 +1,208 @@
+
+  <link rel="stylesheet" href="/static/editor.md/css/editormd.min.css" media="all"> 
+
+    <div class="layui-layout layui-layout-admin pp-main">
+        <form class="layui-form pp-form" action="javascript:;" method="post" >
+            <div class="layui-form-item">
+                <label class="layui-form-label">所属栏目</label>
+                <div class="layui-input-inline">
+                    <select name="cate_id" lay-verify="required"  lay-search="" style="width: 100%">
+                        <option value=""></option>
+                        <?php foreach($cate as $k=>$v):?>
+                        <option value="<?=$k?>" <?php if($k==$art['cate_id']):?>selected<?php endif;?>><?=$v?></option>
+                        <?php endforeach;?>
+                       
+                    </select>
+                </div>
+                <div class="layui-form-mid layui-word-aux">*</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">标题</label>
+                <div class="layui-input-inline width40">
+                    <input type="text" name="title" id="title" lay-verify="required" autocomplete="off" placeholder="不超过100字" class="layui-input" value="<?=$art['title']?>">
+                </div>
+                <div class="layui-form-mid layui-word-aux">*</div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">标签</label>
+                <div class="layui-input-inline width40">
+                    <input type="text" name="tag" id="tag" lay-verify="required" autocomplete="off" placeholder="多个标签使用英文逗号隔开" class="layui-input" value="<?=$art['tag']?>">
+                </div>
+                <div class="layui-form-mid layui-word-aux"><a class="layui-btn layui-btn-xs" id="tag_add">插入已有标签</a></div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">来源</label>
+                <div class="layui-input-inline width20">
+                    <input type="text" name="from" id="from" lay-verify="required" autocomplete="off" placeholder="admin" class="layui-input" value="<?=$art['from']?>">
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否原创</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="is_original" value="1" title="是" <?php if($art['is_original']==1):?>checked<?php endif;?>>
+                    <input type="radio" name="is_original" value="0" title="否" <?php if($art['is_original']==0):?>checked<?php endif;?>>
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否推荐</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="recommand" value="1" title="是" <?php if($art['recommand']==1):?>checked<?php endif;?>>
+                    <input type="radio" name="recommand" value="0" title="否" <?php if($art['recommand']==0):?>checked<?php endif;?>>
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否头条</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="headline" value="1" title="是" <?php if($art['headline']==1):?>checked<?php endif;?>>
+                    <input type="radio" name="headline" value="0" title="否" <?php if($art['headline']==0):?>checked<?php endif;?>>
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+            </div>
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">封面图</label>
+                <div class="layui-input-inline width60">
+                    <div class="layui-row">
+                        <div class="layui-col-xs6">
+                            <input type="text" name="img_src" lay-verify="img_src" autocomplete="off" id="img_src"  placeholder="文件地址" readonly="" class="layui-input" value="<?=$art['img_src']?>">
+                        </div>
+                        <div class="layui-col-xs6">
+                            <div class="layui-upload">
+                                <a class="input-file input-fileup layui-btn layui-btn-primary" href="javascript:;">
+                                    选择图片<input size="20" type="file" name="myfile" id="myfile">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="border: 1px solid #efeeff;width: 112px;height: 77px;margin-top:10px;float: left;"><img src="<?=$art['img_src']?>" alt="图片" width="110" height="75" id="img_src_show"></div>
+
+                    <div style="float: left;margin-left: 10px;margin-top: 10px;line-height: 77px;"><a class="layui-btn layui-btn-xs" id="img_add">插入已有图片</a></div>
+                </div>
+                
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">文章内容</label>
+                <div class="layui-input-inline" style="width: 100%" id="art-editormd" style="border: 1px solid #e4e4e4">
+                   
+<textarea name="content" style="display:none;"><?=$art['content']?></textarea>
+                </div>
+            </div>
+
+            <input type="hidden" value="<?=$art['id']?>" name="id">
+            <div class="clear"></div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="sub">保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+<script src="/static/layui/layui.js"></script>
+<script src="/static/public/js/jquery.min.js?t=13"></script>
+<script src="/static/editor.md/editormd.js"></script>
+<script>
+    var $;
+    var apiEditor;
+    layui.use(['table','form','element','jquery','upload'], function(){
+        var table = layui.table;
+        var form = layui.form;
+        var element = layui.element;
+        $ = layui.jquery;
+
+        $('#tag_add').on('click',function(){
+            layer.open({
+                title:'选择已有标签',
+                type: 2, 
+                area: ['600px', '300px'],
+                content: ['/admin/article/tag_add','no'], 
+            }); 
+        });
+
+        $('#img_add').on('click',function(){
+            layer.open({
+                title:'选择最近图片',
+                type: 2, 
+                area: ['600px', '300px'],
+                content: ['/admin/article/img_add'], 
+            }); 
+        });
+
+        //上传图片
+        var upload = layui.upload;
+        upload.render({
+            elem: '#myfile'
+            ,url: '/public/upload/image'
+            ,auto: true //选择文件后不自动上传
+            ,exts: 'jpg|png|gif|jpeg'
+            ,data: {w:0,h:0,'file_path':'article'}
+            ,done: function(res, index, upload){
+                //假设code=0代表上传成功
+                if(res.code == 0){
+                    $('#img_src').val(res.data.src);
+                    $('#img_src_show').attr('src',res.data.src);
+                }else{
+                    layer.msg(res.msg);
+                    return;
+                }
+            }
+            ,error: function(index, upload){
+                layer.msg("上传失败，请重新上传");
+                return;
+            }
+        }); 
+
+        //编辑器
+        apiEditor = editormd("art-editormd", {
+            width  : "90%",
+            height : 720,
+            path   : '/static/editor.md/lib/',
+            previewTheme : "dark",
+            saveHTMLToTextarea : true,
+            onchange : function() {
+                $("#output").html("onchange : this.id =>" + this.id + ", markdown =>" + this.getValue());
+                console.log("onchange =>", this, this.id, this.settings, this.state);
+            },
+            toolbarIcons : function() {
+                // Or return editormd.toolbarModes[name]; // full, simple, mini
+                // Using "||" set icons align right.
+                return ["undo", "redo", "|", 
+                        "bold", "del", "italic", "quote", "|", 
+                        "h1", "h2", "h3", "h4", "h5", "h6", "|", 
+                        "list-ul", "list-ol", "hr", "|",
+                        "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "datetime", "emoji", "html-entities", "pagebreak", "|",
+                        "goto-line", "watch", "preview", "fullscreen", "clear", "search"]
+            },
+        });
+
+        form.on('submit(sub)', function(data){
+            var form_data = data.field;
+            $.post('/admin/article/save', form_data, function (out) {
+                if (out.status == 0) {
+                    layer.msg(out.msg,{icon: 1},function () {
+                        window.location.href="/admin/article/index";
+                    })
+                } else {
+                    layer.msg(out.msg)
+                }
+            }, "json");
+            return false;
+        });
+
+        form.render();
+
+    });
+</script>
+
+
+</body>
+</html>

@@ -146,38 +146,41 @@ class MY_Model extends CI_Model
 	#
 	########################
 	
+	
 	/**
 	 * [getConditionData 有条件]
 	 * @param  string $field [获取字段]
 	 * @param  string $where [条件]
 	 * @param  string $order [id desc]
 	 * @param  string $where [1,10]
+	 * @param  int $debug [1,10]
 	 * 
 	 * @return [type]        [description]
 	 */
-	public function getConditionData($field='*',$where='1=1',$order='',$limit='')
+	public function getConditionData($field='*',$where='1=1',$order='',$limit='',$debug=0)
 	{
 		$sql   = "SELECT ".$field
 				." FROM ".$this->_table
 				.' WHERE '.$where;
 		$sql .= $order ? ' ORDER BY '.$order : '';
 		$sql .= $limit ? ' limit '.$limit : '';
-		//dump($sql);
+		if ($debug==1) return $sql;
 		return $this->db_pp->query($sql)->result_array();
 	}
 
 	/**
 	 * [addData 新增数据]
 	 * @param array $data [数据]
-	 * @param array $add_time [是否自动增加add_time字段]
+	 * @param int $add_time [是否自动增加add_time字段]
+	 * @param int $debug [是否debug,1-debug]
 	 * @return int id
 	 */
-	public function addData($data=[],$add_time=1)
+	public function addData($data=[],$add_time=1,$debug=0)
 	{
 		if (empty($data)) return false;
 		if($add_time==1) $data['add_time'] = time();
 		$this->db_pp->insert($this->_table,$data);
-		//return $this->db_pp->last_query();
+		if($debug==1) return $this->db_pp->last_query();
 		return $this->db_pp->insert_id();
 	}
 
@@ -185,15 +188,17 @@ class MY_Model extends CI_Model
 	 * [editData 修改]
 	 * @param  array  $data  [数组]
 	 * @param  string $where [字符串条件]
+	 * @param int $edit_time [是否自动增加edit_time字段]
+	 * @param int $debug [是否debug,1-debug]
 	 * @return [type]        [false,or int 0,1]
 	 */
-	public function editData($data=[],$where='')
+	public function editData($data=[],$where='',$time=1,$debug=0)
 	{
 		if(!$where || empty($data)) return false;
-		$data['edit_time'] = time();
+		if($time==1) $data['edit_time'] = time();
 		$this->db_pp->where($where); 
 		$this->db_pp->update($this->_table,$data);
-		//return $this->db_pp->last_query();
+		if($debug==1) return $this->db_pp->last_query();
 		return $this->db_pp->affected_rows();
 	}
 
@@ -201,23 +206,25 @@ class MY_Model extends CI_Model
 	 * [saveData 更新或新增商品]
 	 * @param  [type] $data  [一维数组]
 	 * @param  string $where [条件]
+	 * @param int $time [是否自动增加更新时间]
+	 * @param int $debug [是否debug,1-debug]
 	 * @return [type]        [description]
 	 */
-	public function saveData($data=[],$where='')
+	public function saveData($data=[],$where='',$time=1,$debug=0)
 	{
-		$res = $this->getConditionData('*',$where);	
-		return $res ? $this->editData($data,$where) : $this->addData($data,$where);	
+		$res = $this->getConditionData('*',$where);
+		return $res ? $this->editData($data,$where,$time,$debug) : $this->addData($data,$time,$debug);	
 	}
 
 	/**
-	 * [delData 删除 慎用，一般采用eidt修改状态实现]
+	 * [delData 删除 慎用，一般采用edit修改状态实现]
 	 * @param  string $where [description]
 	 * @return [type]        [description]
 	 */
 	public function delData($where=[])
 	{
 		if (empty($where)) return false; 
-		return  $this->db->delete($this->_table, $where);
+		return  $this->db_pp->delete($this->_table, $where);
 	}
 
 
