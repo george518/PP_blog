@@ -16,8 +16,19 @@
     layui.use(['element','jquery'], function(){
         var element = layui.element;
         var $ = layui.jquery;
+        $('button').on('click',function(){
+            var tag_name = $(this).text();
+            var tags = $('#tag', window.parent.document);
+            var tag_val = tags.val();
 
-        
+            if(!tag_val)
+            {
+                tags.val(tag_name);
+            }else
+            {
+                tags.val(tag_val+','+tag_name);
+            }
+        });     
         element.render();
 
     });

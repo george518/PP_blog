@@ -1,0 +1,44 @@
+<!-- 弹出层时，用于隐藏 -->
+<style>
+    .nav-title{
+        display: none;
+    }
+    .divimg{
+        border: 1px solid #efeeff;
+        width: 56px;
+        height: 36px;
+        margin-top:10px;
+        float: left;
+        margin-left: 10px;
+    }
+</style>
+
+<div class="layui-layout layui-layout-admin pp-main mt20">
+    <?php foreach($img as $k=>$v):?>
+        <?php if($v['img_src']):?>
+        <div class="divimg" data-img="<?=$v['img_src']?>">
+            <img lay-src="<?=$v['img_src']?>" alt="点击选择" width="56" height="36">
+        </div>
+        <?php endif;?>
+    <?php endforeach;?>
+</div>
+
+<script src="/static/layui/layui.js"></script>
+<script>
+    layui.use(['element','jquery','flow'], function(){
+        var element = layui.element;
+        var $ = layui.jquery;
+        var flow = layui.flow;
+
+        $('.divimg').on('click',function(){
+            var img_src = $(this).attr('data-img');
+            var img_src_show = $('#img_src_show', window.parent.document);
+            var img_src_input = $('#img_src', window.parent.document);
+            img_src_show.attr('src',img_src);
+            img_src_input.val(img_src);
+        });
+        flow.lazyimg();  
+        element.render();
+
+    });
+</script>

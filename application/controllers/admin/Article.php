@@ -4,7 +4,7 @@
 ** @Author: haodaquan
 ** @Date:   2018-04-10 21:34:11
 ** @Last Modified by:   haodaquan
-** @Last Modified time: 2018-04-10 21:34:21
+** @Last Modified time: 2018-04-12 17:53:04
 *************************************************************/
 class Article extends MY_Controller
 {
@@ -87,6 +87,16 @@ class Article extends MY_Controller
     	$this->display('admin/article_tag_add.html');
     }
 
+    public function img_add()
+    {
+        $this->load->model($this->module.'/'.$this->model_name);
+        $model = $this->model_name;
+        $this->data['img'] = $this->$model->getConditionData('distinct(img_src)','status=0',' id desc','50');
+        $this->display('admin/article_img_add.html');
+    }
+
+    
+
     public function del(){
     	$this->load->model($this->module.'/'.$this->model_name);
     	$model = $this->model_name;
@@ -108,20 +118,63 @@ class Article extends MY_Controller
     	$this->load->model($this->module.'/'.$this->model_name);
     	$model = $this->model_name;
     	$form_data = $this->input->post();
+
+        unset($form_data['myfile']);
+
+        $detail = strip_tags($form_data['art-editormd-html-code']);//去除html标签
+        $pattern = '/\s/';//去除空白
+        $content = preg_replace($pattern, '', $detail);
+        $form_data['detail'] =  mb_substr($content,0,150,'utf-8');
+        $form_data['content'] = $form_data['art-editormd-html-code'];
+        unset($form_data['art-editormd-html-code']);
+
+        $id  = $type = 0;
         if (isset($form_data['id'])) {
-        	$result = $this->$model->editData($form_data,'id='.(int)$form_data['id']);
+             $result = $this->$model->editData($form_data,'id='.(int)$form_data['id']);
+             $id     = $form_data['id'];
         }else
         {
-        	$result = $this->$model->addData($form_data);
+            $result = $this->$model->addData($form_data,1,1);
+            $id     = $result;
+            $type   = 1;
         }
 
         if($result===false || $result<1)
         {
-        	$this->ajaxReturn($result,300,'保存失败');
+            $this->ajaxReturn($result,300,'保存失败');
         }else
         {
-        	$this->ajaxReturn($result);
+            $this->tag_handle($id,$form_data['tag'],$type);
+            $this->ajaxReturn($result);
         }
+    }
+
+        /**
+     * [tag_handle 标签处理]
+     * @param  [type]  $tags [标签字符串，逗号隔开]
+     * @param  integer $type [1-新增，0-修改]
+     * @return [type]        [description]
+     */
+    private function tag_handle($aid,$tags,$type=1)
+    {
+        $tags_arr = explode(',',$tags);
+        $this->load->model('admin/tag_model');
+        $this->load->model('admin/article_tag_model');
+        $tag_id_arr = [];
+        foreach ($tags_arr as $key => $value) {
+            if(!$value) continue;
+            #判断是否存在
+            $res = $this->tag_model->getConditionData('*','tag_name="'.$value.'"');
+            if(!isset($res[0]['id']))
+            {
+                $tag_id = $this->tag_model->addData(['tag_name'=>$value]);
+                $tag_id_arr[] = $tag_id;
+            }else
+            {
+                $tag_id_arr[] = $res[0]['id'];
+            }
+        }
+        return $this->article_tag_model->save_art_tag($aid,$tag_id_arr,$type);
     }
 
 }

@@ -2,7 +2,7 @@
   <link rel="stylesheet" href="/static/editor.md/css/editormd.min.css" media="all"> 
 
     <div class="layui-layout layui-layout-admin pp-main">
-        <form class="layui-form pp-form" action="" method="post" >
+        <form class="layui-form pp-form" action="javascript:;" method="post" >
             <div class="layui-form-item">
                 <label class="layui-form-label">所属栏目</label>
                 <div class="layui-input-inline">
@@ -27,7 +27,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">标签</label>
                 <div class="layui-input-inline width40">
-                    <input type="text" name="tag" id="tag" lay-verify="required" autocomplete="off" placeholder="多个标签使用英文逗号隔开" class="layui-input" value="">
+                    <input type="text" name="tag" id="tag" lay-verify="required" autocomplete="off" placeholder="多个标签使用英文逗号隔开" class="layui-input" value="1212">
                 </div>
                 <div class="layui-form-mid layui-word-aux"><a class="layui-btn layui-btn-xs" id="tag_add">插入已有标签</a></div>
             </div>
@@ -51,8 +51,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">是否推荐</label>
                 <div class="layui-input-inline">
-                    <input type="radio" name="recommend" value="1" title="是">
-                    <input type="radio" name="recommend" value="0" title="否" checked>
+                    <input type="radio" name="recommand" value="1" title="是">
+                    <input type="radio" name="recommand" value="0" title="否" checked>
                 </div>
                 <div class="layui-form-mid layui-word-aux"></div>
             </div>
@@ -81,16 +81,18 @@
                             </div>
                         </div>
                     </div>
-                    <div style="border: 1px solid #efeeff;width: 112px;height: 77px;margin-top:10px;"><img src="/static/admin/images/default.png" alt="图片" width="110" height="75" id="img_src_show"></div>
+                    <div style="border: 1px solid #efeeff;width: 112px;height: 77px;margin-top:10px;float: left;"><img src="/static/admin/images/default.png" alt="图片" width="110" height="75" id="img_src_show"></div>
+
+                    <div style="float: left;margin-left: 10px;margin-top: 10px;line-height: 77px;"><a class="layui-btn layui-btn-xs" id="img_add">插入已有图片</a></div>
                 </div>
-                <div class="layui-form-mid layui-word-aux"></div>
+                
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">文章内容</label>
                 <div class="layui-input-inline" style="width: 100%" id="art-editormd" style="border: 1px solid #e4e4e4">
                    
-                    <textarea name="detail " style="display:none;">
+                    <textarea name="content" style="display:none;">###写下你的故事...
                     </textarea>
                 </div>
             </div>
@@ -123,7 +125,16 @@
                 area: ['600px', '300px'],
                 content: ['/admin/article/tag_add','no'], 
             }); 
-        })
+        });
+
+        $('#img_add').on('click',function(){
+            layer.open({
+                title:'选择最近图片',
+                type: 2, 
+                area: ['600px', '300px'],
+                content: ['/admin/article/img_add'], 
+            }); 
+        });
 
         //上传图片
         var upload = layui.upload;
@@ -170,6 +181,20 @@
                         "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "datetime", "emoji", "html-entities", "pagebreak", "|",
                         "goto-line", "watch", "preview", "fullscreen", "clear", "search"]
             },
+        });
+
+        form.on('submit(sub)', function(data){
+            var form_data = data.field;
+            $.post('/admin/article/save', form_data, function (out) {
+                if (out.status == 0) {
+                    layer.msg(out.msg,{icon: 1},function () {
+                        window.location.href="/admin/article/index";
+                    })
+                } else {
+                    layer.msg(out.msg)
+                }
+            }, "json");
+            return false;
         });
 
         form.render();
