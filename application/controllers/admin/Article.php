@@ -88,11 +88,17 @@ class Article extends MY_Controller
     {
         $this->load->model($this->module.'/'.$this->model_name);
         $model = $this->model_name;
-        $this->data['img'] = $this->$model->getConditionData('distinct(img_src),id','status=0',' id desc','50');
+       	$img = $this->$model->getConditionData('distinct(img_src),id','status=0',' id desc','50');
+		$path = dirname(BASEPATH);
+       	$this->data['img'] = [];
+       	foreach ($img as $key => $value) {
+       		$filename = $path.$value['img_src'];
+       		if (file_exists($filename)) {
+       			$this->data['img'][] = $value;
+       		}
+       	}
         $this->display('admin/article_img_add.html');
     }
-
-    
 
     public function del(){
     	$this->load->model($this->module.'/'.$this->model_name);
@@ -124,14 +130,14 @@ class Article extends MY_Controller
         $form_data['detail'] =  mb_substr($content,0,150,'utf-8');
         // $form_data['content'] = $form_data['art-editormd-html-code'];
         unset($form_data['art-editormd-html-code']);
-
+        unset($form_data['editormd-image-file']);
         $id  = $type = 0;
         if (isset($form_data['id'])) {
              $result = $this->$model->editData($form_data,'id='.(int)$form_data['id']);
              $id     = $form_data['id'];
         }else
         {
-            $result = $this->$model->addData($form_data,1,1);
+            $result = $this->$model->addData($form_data);
             $id     = $result;
             $type   = 1;
         }

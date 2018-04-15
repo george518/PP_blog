@@ -120,16 +120,17 @@
 
         $('#tag_add').on('click',function(){
             layer.open({
-                title:'选择已有标签',
+                title:'单击选择已有标签',
                 type: 2, 
-                area: ['600px', '300px'],
+                area: ['400px', '300px'],
+                offset: ['100px', '550px'],
                 content: ['/admin/article/tag_add','no'], 
             }); 
         });
 
         $('#img_add').on('click',function(){
             layer.open({
-                title:'选择最近图片',
+                title:'单击选择最近图片',
                 type: 2, 
                 area: ['600px', '300px'],
                 content: ['/admin/article/img_add'], 
@@ -170,10 +171,10 @@
             imageUpload : true,
             imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
             imageUploadURL : "/public/upload/image_md",
-            onchange : function() {
-                $("#output").html("onchange : this.id =>" + this.id + ", markdown =>" + this.getValue());
-                console.log("onchange =>", this, this.id, this.settings, this.state);
-            },
+            // onchange : function() {
+            //     $("#output").html("onchange : this.id =>" + this.id + ", markdown =>" + this.getValue());
+            //     console.log("onchange =>", this, this.id, this.settings, this.state);
+            // },
             toolbarIcons : function() {
                 // Or return editormd.toolbarModes[name]; // full, simple, mini
                 // Using "||" set icons align right.

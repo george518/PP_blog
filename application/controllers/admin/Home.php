@@ -21,7 +21,8 @@ class Home extends MY_Controller
 
 	public function start()
 	{
-		echo "起始页";
+		$this->data['page_title'] = '系统首页';
+		$this->display('admin/start.html');
 	}
 
 }

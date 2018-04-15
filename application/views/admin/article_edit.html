@@ -168,9 +168,12 @@
             path   : '/static/editor.md/lib/',
             previewTheme : "dark",
             saveHTMLToTextarea : true,
+            imageUpload : true,
+            imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL : "/public/upload/image_md",
             onchange : function() {
-                $("#output").html("onchange : this.id =>" + this.id + ", markdown =>" + this.getValue());
-                console.log("onchange =>", this, this.id, this.settings, this.state);
+                // $("#output").html("onchange : this.id =>" + this.id + ", markdown =>" + this.getValue());
+                // console.log("onchange =>", this, this.id, this.settings, this.state);
             },
             toolbarIcons : function() {
                 // Or return editormd.toolbarModes[name]; // full, simple, mini

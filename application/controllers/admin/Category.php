@@ -59,8 +59,12 @@ class Category extends MY_Controller
     public function del(){
     	$this->load->model($this->module.'/'.$this->model_name);
     	$model = $this->model_name;
-    	#判断分类下有无内容
-    	$id = $this->input->post('id');
+        $this->load->model('admin/article_model');
+        $id = $this->input->post('id');
+        $num = $this->article_model->getCount(' WHERE cate_id='.(int)$id);
+        if($num>0) $this->ajaxReturn($num,300,'请先删除该栏目下的文章');
+
+    	
     	$data['id'] = (int)$id;
     	$data['status'] = 1;
     	$result = $this->$model->editData($data,'id='.(int)$id);

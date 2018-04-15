@@ -13,11 +13,17 @@ class Upload extends MY_Controller
     public $allow_type   = ["jpg", "png", "gif",'xlsx','jpeg','ico'];//允许上传文件格式 
     public $allow_size   = 2097152;//上传文件大小 2M2*1024*1024
 
+    public $img_type = [
+        'banner'=>0,
+        'article'=>1,
+        'md_img'=>2
+    ];
+
     public function __construct()
 	{
 		parent::__construct(false);
+        $this->load->model('admin/image_model');
 	}
- 
 
 
     public function image()
@@ -27,6 +33,11 @@ class Upload extends MY_Controller
         $height = $this->input->post('h');
 
         if (!$file) $this->return_data(300,'上传文件配置有误');
+        if (!isset($this->img_type[$file])){
+            $this->return_data(300,'存储位置不允许');
+        } 
+        $style = $this->img_type[$file];#类型
+        
         if (isset($_FILES['myfile']) && count($_FILES['myfile'])==5) {
             $name     = $_FILES['myfile']['name']; 
             $size     = $_FILES['myfile']['size']; 
@@ -40,6 +51,13 @@ class Upload extends MY_Controller
             $imageInfo = $this->getImageInfo($name_tmp);
             if($width!=0 && $imageInfo['width']!=$width) $this->return_data(300,'图片宽度不符合要求！');
             if($height!=0 && $imageInfo['height']!=$height) $this->return_data(300,'图片高度不符合要求！');
+
+            //如果有则直接返回
+            $img_source = $this->check_image($name,$size,$imageInfo['width'],$imageInfo['height']);
+            if ($img_source===false && $img_source) {
+                $this->return_data(0,'上传成功',$img_source,$name);
+            }
+
             $time = date('Y-m-d',time()); 
             $path = $this->file_path.$file.'/'.$time.'/';
             if(!is_dir($path)) make_dir($path);
@@ -50,6 +68,7 @@ class Upload extends MY_Controller
             //$img_url = $img_path.'/'.$time.'/'.$pic_name; #访问名称
             if (move_uploaded_file($name_tmp, $pic_url)) 
             {
+                $this->save_img('/'.$pic_url,$name,$size,$style,$imageInfo['width'],$imageInfo['height']);
             	$this->return_data(0,'上传成功','/'.$pic_url,$pic_name);
             } else 
             { 
@@ -58,10 +77,13 @@ class Upload extends MY_Controller
         }
     }
 
+
     public function image_md()
     {
         $file = 'editormd';
         $fname = 'editormd-image-file';
+        $style = $this->img_type['md_img'];
+
         if (isset($_FILES[$fname]) && count($_FILES[$fname])==5) {
             $name     = $_FILES[$fname]['name']; 
             $size     = $_FILES[$fname]['size']; 
@@ -73,8 +95,13 @@ class Upload extends MY_Controller
             if ($size > $this->allow_size) $this->return_md_data(300,'图片大小已超过2M限制！');
             
             $imageInfo = $this->getImageInfo($name_tmp);
-            // if($width!=0 && $imageInfo['width']!=$width) $this->return_data(300,'图片宽度不符合要求！');
-            // if($height!=0 && $imageInfo['height']!=$height) $this->return_data(300,'图片高度不符合要求！');
+
+            //如果有则直接返回
+            $img_source = $this->check_image($name,$size,$imageInfo['width'],$imageInfo['height']);
+            if ($img_source===false && $img_source) {
+                $this->return_md_data(1,'上传成功了',$img_source,$name);
+            }
+
             $time = date('Y-m-d',time()); 
             $path = $this->file_path.$file.'/'.$time.'/';
             if(!is_dir($path)) make_dir($path);
@@ -85,7 +112,8 @@ class Upload extends MY_Controller
             //$img_url = $img_path.'/'.$time.'/'.$pic_name; #访问名称
             if (move_uploaded_file($name_tmp, $pic_url)) 
             {
-                $this->return_md_data(0,'上传成功','/'.$pic_url,$pic_name);
+                $this->save_img('/'.$pic_url,$name,$size,$style,$imageInfo['width'],$imageInfo['height']);
+                $this->return_md_data(1,'上传成功了','/'.$pic_url,$pic_name);
             } else 
             { 
                 $this->return_md_data(300,'上传有误，请检查服务器配置！');
@@ -165,6 +193,50 @@ class Upload extends MY_Controller
         echo json_encode($data);
         exit();
     }
+
+        /**
+     * [save_img 存储图片信息]
+     * @param  [type] $pic_url [description]
+     * @param  [type] $name    [description]
+     * @param  [type] $size    [description]
+     * @param  [type] $type    [0-banner,1-face_img,2-md_img]
+     * @return [type]          [description]
+     */
+    private function save_img($pic_url,$name,$size,$type,$width=0,$height=0)
+    {
+        $data = [
+            'title'=>$name,
+            'img_src'=>$pic_url,
+            'size'=>$size,
+            'type'=>$type,
+            'width'=>$width,
+            'height'=>$height,
+            'key_id'=>md5($name.$size.$width.$height)
+        ];
+
+        return $this->image_model->addData($data);
+    }
+
+    /**
+     * [check_image 检查图片信息]
+     * @param  integer $name   [description]
+     * @param  integer $size   [description]
+     * @param  integer $width  [description]
+     * @param  integer $height [description]
+     * @return [type]          [description]
+     */
+    private function check_image($name=0,$size=0,$width=0,$height=0)
+    {
+        $key_id = md5($name.$size.$width.$height);
+
+        $img = $this->image_model->getConditionData('img_src','key_id="'.$key_id.'"');
+        if (isset($img[0]['img_src'])) {
+            return $img[0]['img_src'];
+        }
+
+        return false;
+    }
+
 
     
 }

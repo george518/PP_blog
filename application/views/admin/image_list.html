@@ -1,0 +1,107 @@
+    <div class="layui-layout layui-layout-admin pp-main">
+        <div class="layui-row" style="margin-top: 20px;">
+            <div class="layui-col-xs6">
+                <div class="layui-btn-group">
+                  <!-- <button class="layui-btn" id="add"><i class="fa fa-plus-circle back_space1"></i>增加</button> -->
+                </div>
+            </div>
+            <div class="layui-col-xs6 search_text" style="text-align: right;">
+                <form class="layui-form" action="" onsubmit="javascript:return false;">
+                    <div class="search_form">
+                        <div class="layui-inline" style="width: 40%">
+                            <input class="layui-input" name="title" id="title" autocomplete="off"  placeholder="图片标题" >
+                        </div>
+                        <button class="layui-btn" data-type="reload" id="reload"><i class="fa fa-search"></i>查询</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <table class="layui-hide" id="table_list" lay-filter="table_filter">
+        </table>
+
+        <script type="text/html" id="bar">
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
+    </div>
+
+<script src="/static/layui/layui.js"></script>
+<script>
+
+    layui.use(['table','form','element','layer'], function(){
+        var table = layui.table;
+        var form = layui.form;
+        var element = layui.element;
+        var layer = layui.layer;
+
+        //方法级渲染
+        table.render({
+            elem: '#table_list'
+            ,url: '/admin/image/table'
+            ,method:'POST'
+            ,cols: [[
+                // {checkbox: true, fixed: true},
+                {field:'id', title: 'ID', align:'center',sort: true, width:50}
+                ,{field:'title',title: '标题',width:200}
+                ,{field:'img_src',title: '图片'}
+                ,{field:'size',title: '大小'}
+                ,{field:'width',title: '宽度'}
+                ,{field:'height',title: '高度'}
+                ,{field:'type',title: '类型'}
+                ,{field:'add_time', title: '日期'}
+                ,{fixed: 'right', width:200, align:'center', toolbar: '#bar'}
+            ]]
+            ,id: 'listReload'
+            ,page: true
+            ,height: "full-130"
+            ,initSort: {
+                field: 'sort' //排序字段，对应 cols 设定的各字段名
+                ,type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+              }
+        });
+
+        var $ = layui.$, active = {
+            reload: function(){
+                table.reload('listReload', {
+                    where: {
+                        'title|like' : $('#title').val()
+                    }
+                    ,page:{
+                        curr:1
+                    }
+                });
+            }
+        };
+
+        
+        //监听工具条
+        table.on('tool(table_filter)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'del'){
+                var msg = "确定要删除【"+data.title+"】吗？";
+                layer.confirm(msg, function(){
+                    var del_data = {"id":data.id}
+                    $.post('/admin/image/del', del_data, function (out) {
+                        if (out.status == 0) {
+                            layer.msg(out.msg,{icon: 1},function () {
+                                $("#reload").click();
+                            })
+                        } else {
+                            layer.msg(out.msg)
+                        }
+                    }, "json");        
+                    return false;
+                });
+                return false;
+            } else{
+                layer.msg('操作不存在');
+            }
+        });
+
+        $('.search_form .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+
+</script>
