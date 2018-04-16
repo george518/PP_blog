@@ -71,35 +71,6 @@
 
                 </div>
             </div>
-           <!--  <table class="layui-table">
-                <colgroup>
-                    <col width="150">
-                    <col width="200">
-                    <col>
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>昵称</th>
-                        <th>加入时间</th>
-                        <th>签名</th>
-                    </tr> 
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>贤心</td>
-                        <td>2016-11-29</td>
-                        <td>人生就像是一场修行</td>
-                    </tr>
-                    <tr>
-                        <td>许闲心</td>
-                        <td>2016-11-28</td>
-                        <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
-                    </tr>
-                </tbody>
-            </table> -->
-
-
-
         </div>
         <div class="layui-col-md4">
             <div class="layui-card pp-card">
@@ -141,118 +112,172 @@
                     </table>
                 </div>
             </div>
+
+            <div class="layui-card pp-card">
+                <div class="layui-card-header">系统信息</div>
+                <div class="layui-card-body layui-text">
+                    <table class="layui-table">
+                        <colgroup>
+                          <col width="100">
+                          <col>
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th width="30%">环境</th>
+                                <td><span id="lbServerName">http://127.0.0.1/</span></td>
+                            </tr>
+                            <tr>
+                                <td>IP</td>
+                                <td>192.168.0.1</td>
+                            </tr>
+                            <tr>
+                                <td>域名</td>
+                                <td>www.haodaquan.com</td>
+                            </tr>
+                            <tr>
+                                <td>端口 </td>
+                                <td>80</td>
+                            </tr>
+                            <tr>
+                                <td>位置 </td>
+                                <td>/data/wwwroot</td>
+                            </tr>
+                            <tr>
+                                <td>时间 </td>
+                                <td id="run_time"></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 </div>
 
 <script src="/static/layui/layui.js"></script>
 <script src="/static/public/js/echarts.simple.min.js"></script>
 <script>
-    layui.use(['form','element','jquery'], function(){
+    layui.use(['form','element','jquery','util','laydate'], function(){
 
         var form = layui.form;
         var element = layui.element;
         var $ = layui.jquery;
+        var util = layui.util;
+        var laydate = layui.laydate
+
+        var util = layui.util;
 
 
+        function run_time() {
+            var a = new Date();
+            var b = new Date(2010, 03, 18,00,00,00);
+            a = a.valueOf();
+            b = b.valueOf();
+            var c = a - b;
+            c = new Date(c);
+            var str = c.getFullYear() - 1970 + '年' + (c.getMonth()) + '个月' + (c.getDate()-1) + '天' + (c.getHours()-8) + '个小时' + c.getMinutes() + '分钟' + c.getSeconds() + '秒';
+            $("#run_time").html(str);
+        }
 
+        setInterval(run_time,1000);
         element.render();
 
     });
 </script>
 <script type="text/javascript">
-var a = "2018-04-06,2018-04-07,2018-04-08,2018-04-09,2018-04-10,2018-04-11,2018-04-12,2018-04-13,2018-04-14,2018-04-15";
-var date = a.split(",");
+    var a = "2018-04-06,2018-04-07,2018-04-08,2018-04-09,2018-04-10,2018-04-11,2018-04-12,2018-04-13,2018-04-14,2018-04-15";
+    var date = a.split(",");
 
-var b = "44,47,86,65,94,86,99,97,62,6,";
-var login_sum = b.split(",");
+    var b = "44,47,86,65,94,86,99,97,62,6,";
+    var login_sum = b.split(",");
 
-var c = "19,19,56,33,37,31,51,45,17,0,";
-var down_sum = c.split(",");
+    var c = "19,19,56,33,37,31,51,45,17,0,";
+    var down_sum = c.split(",");
 
-var myChart = echarts.init(document.getElementById('main'));
-var colors = ['#009688', '#FF5722', '#675bba'];
-option = {
-    color: colors,
+    var myChart = echarts.init(document.getElementById('main'));
+    var colors = ['#009688', '#FF5722', '#675bba'];
+    option = {
+        color: colors,
 
-    tooltip: {
-        trigger: 'none',
-        axisPointer: {
-            type: 'cross'
-        }
-    },
-    legend: {
-        data:['下载次数', '登录次数']
-    },
-    grid: {
-        top: 70,
-        bottom: 50,
-        left:50,
-        right:0
-    },
-    xAxis: [
-        {
-            type: 'category',
-            axisTick: {
-                alignWithLabel: true
-            },
-            axisLine: {
-                onZero: false,
-                lineStyle: {
-                    color: colors[1]
-                }
-            },
+        tooltip: {
+            trigger: 'none',
             axisPointer: {
-                label: {
-                    formatter: function (params) {
-                        return '下载次数  ' + params.value
-                            + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
-                    }
-                }
-            },
-            data: date
+                type: 'cross'
+            }
         },
-        {
-            type: 'category',
-            axisTick: {
-                alignWithLabel: true
-            },
-            axisLine: {
-                onZero: false,
-                lineStyle: {
-                    color: colors[0]
-                }
-            },
-            axisPointer: {
-                label: {
-                    formatter: function (params) {
-                        return '登录次数  ' + params.value
-                            + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
-                    }
-                }
-            },
-            data: date
-        }
-    ],
-    yAxis: [
-        {
-            type: 'value'
-        }
-    ],
-    series: [
-        {
-            name:'登录次数',
-            type:'line',
-            xAxisIndex: 1,
-            smooth: true,
-            data: login_sum
+        legend: {
+            data:['下载次数', '登录次数']
         },
-        {
-            name:'下载次数',
-            type:'line',
-            smooth: true,
-            data: down_sum
-        }
-    ]
-};
+        grid: {
+            top: 70,
+            bottom: 50,
+            left:50,
+            right:0
+        },
+        xAxis: [
+            {
+                type: 'category',
+                axisTick: {
+                    alignWithLabel: true
+                },
+                axisLine: {
+                    onZero: false,
+                    lineStyle: {
+                        color: colors[1]
+                    }
+                },
+                axisPointer: {
+                    label: {
+                        formatter: function (params) {
+                            return '下载次数  ' + params.value
+                                + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+                        }
+                    }
+                },
+                data: date
+            },
+            {
+                type: 'category',
+                axisTick: {
+                    alignWithLabel: true
+                },
+                axisLine: {
+                    onZero: false,
+                    lineStyle: {
+                        color: colors[0]
+                    }
+                },
+                axisPointer: {
+                    label: {
+                        formatter: function (params) {
+                            return '登录次数  ' + params.value
+                                + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+                        }
+                    }
+                },
+                data: date
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name:'登录次数',
+                type:'line',
+                xAxisIndex: 1,
+                smooth: true,
+                data: login_sum
+            },
+            {
+                name:'下载次数',
+                type:'line',
+                smooth: true,
+                data: down_sum
+            }
+        ]
+    };
 myChart.setOption(option);
 </script>
