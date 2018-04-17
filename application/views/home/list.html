@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>列表页</title>
+        <link rel="stylesheet" href="../static/layui/css/layui.css">
+        <link rel="stylesheet" href="../static/home/css/base.css">
+        <link href="../static/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    </head>
+
+    <body class="bg">
+        <!-- 导航 -->
+        <div class="header layui-layout layui-layout-admin">
+            <div class="layui-header">
+                <div class="layui-logo" style="font-size: 32px;">在路上</div>
+                    <ul class="layui-nav layui-layout-left">
+                        <li class="layui-nav-item"><a href="">首页</a></li>
+                        <li class="layui-nav-item"><a href="">编程语言</a></li>
+                        <li class="layui-nav-item"><a href="">数据库</a></li>
+                        <li class="layui-nav-item"><a href="">算法&架构</a></li>
+                        <li class="layui-nav-item"><a href="">技术新闻</a></li>
+                        <li class="layui-nav-item"><a href="">开源项目</a></li>
+                        <li class="layui-nav-item"><a href="">学习生活</a></li>
+                        <!-- <li class="layui-nav-item">
+                            <a href="javascript:;">其它系统</a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="">邮件管理</a></dd>
+                                <dd><a href="">消息管理</a></dd>
+                                <dd><a href="">授权管理</a></dd>
+                            </dl>
+                        </li> -->
+                    </ul>
+                <ul class="layui-nav layui-layout-right">
+                    <!-- <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                            贤心
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="">基本资料</a></dd>
+                            <dd><a href="">安全设置</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item"><a href="">退了</a></li> -->
+                </ul>
+            </div>
+            <div class="hot-tags bg-white">
+                <a href="">Go</a>
+                <a href="">PHP</a>
+                <a href="">Mysql</a>
+            </div>
+        </div>
+
+
+        <!-- 主题 -->
+        <div class="layui-container border pt20 mt105">
+            <div class="layui-row layui-col-space20">
+                <div class="layui-col-md8">
+                    <!-- 位置导航 -->
+                    <div class="header-nav bg-white">
+                        <i class="fa fa-home fa-fw"></i> <a href="">首页</a> 
+                        <i class="fa fa-angle-right"></i> <a href="">编程语言</a>
+                    </div>
+                    <!-- 文章列表 -->
+                    <div class="article-list" id="article-list">
+                        <div class="article shadow mt10">
+                            <div class="article-left">
+                                <img src="../static/home/images/art.jpg"  alt="文章" />
+                            </div>
+                            <div class="article-right">
+                                <div class="article-title">
+                                    <a class="layui-badge" style="font-size: 12px;">推荐</a>
+                                    <a href="/1234">php设计模式(7)单例模式</a>
+                                </div>
+                                <div class="article-abstract">
+                                    前言：说完了工厂模式，按我们的《php设计模式(7)前言》中的规划，这次我们来讨论单例模式。
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="article-footer">
+                                <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-09-08</span>
+                                <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Administrator</span>
+                                <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">编程语言</a></span>
+                                <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;334</span>
+                                <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
+                            </div>
+                        </div>
+
+                        <div class="article shadow mt10">
+                            <div class="article-left">
+                                <img src="../static/home/images/art.jpg"  alt="文章" />
+                            </div>
+                            <div class="article-right">
+                                <div class="article-title">
+                                    <a class="layui-badge" style="font-size: 12px;">推荐</a>
+                                    <a href="/1234">php设计模式(7)单例模式</a>
+                                </div>
+                                <div class="article-abstract">
+                                    前言：说完了工厂模式，按我们的《php设计模式(7)前言》中的规划，这次我们来讨论单例模式。
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="article-footer">
+                                <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-09-08</span>
+                                <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Administrator</span>
+                                <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">编程语言</a></span>
+                                <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;334</span>
+                                <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
+                            </div>
+                        </div>
+
+                        <div class="article shadow mt10">
+                            <div class="article-left">
+                                <img src="../static/home/images/art.jpg"  alt="文章" />
+                            </div>
+                            <div class="article-right">
+                                <div class="article-title">
+                                    <a class="layui-badge" style="font-size: 12px;">推荐</a>
+                                    <a href="/1234">php设计模式(7)单例模式</a>
+                                </div>
+                                <div class="article-abstract">
+                                    前言：说完了工厂模式，按我们的《php设计模式(7)前言》中的规划，这次我们来讨论单例模式。
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="article-footer">
+                                <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-09-08</span>
+                                <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Administrator</span>
+                                <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">编程语言</a></span>
+                                <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;334</span>
+                                <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
+                            </div>
+                        </div>
+
+                        <div class="article shadow mt10">
+                            <div class="article-left">
+                                <img src="../static/home/images/art.jpg"  alt="文章" />
+                            </div>
+                            <div class="article-right">
+                                <div class="article-title">
+                                    <a class="layui-badge" style="font-size: 12px;">推荐</a>
+                                    <a href="/1234">php设计模式(7)单例模式</a>
+                                </div>
+                                <div class="article-abstract">
+                                    前言：说完了工厂模式，按我们的《php设计模式(7)前言》中的规划，这次我们来讨论单例模式。
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="article-footer">
+                                <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-09-08</span>
+                                <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Administrator</span>
+                                <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">编程语言</a></span>
+                                <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;334</span>
+                                <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
+                            </div>
+                        </div>
+
+                        <div class="article shadow mt10">
+                            <div class="article-left">
+                                <img src="../static/home/images/art.jpg"  alt="文章" />
+                            </div>
+                            <div class="article-right">
+                                <div class="article-title">
+                                    <a class="layui-badge" style="font-size: 12px;">推荐</a>
+                                    <a href="/1234">php设计模式(7)单例模式</a>
+                                </div>
+                                <div class="article-abstract">
+                                    前言：说完了工厂模式，按我们的《php设计模式(7)前言》中的规划，这次我们来讨论单例模式。
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="article-footer">
+                                <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-09-08</span>
+                                <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Administrator</span>
+                                <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">编程语言</a></span>
+                                <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;334</span>
+                                <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
+                            </div>
+                        </div>
+
+                        <div class="article shadow mt10">
+                            <div class="article-left">
+                                <img src="../static/home/images/art.jpg"  alt="文章" />
+                            </div>
+                            <div class="article-right">
+                                <div class="article-title">
+                                    <a class="layui-badge" style="font-size: 12px;">推荐</a>
+                                    <a href="/1234">php设计模式(7)单例模式</a>
+                                </div>
+                                <div class="article-abstract">
+                                    前言：说完了工厂模式，按我们的《php设计模式(7)前言》中的规划，这次我们来讨论单例模式。
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="article-footer">
+                                <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-09-08</span>
+                                <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Administrator</span>
+                                <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">编程语言</a></span>
+                                <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;334</span>
+                                <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
+                            </div>
+                        </div>
+
+                        <div class="article shadow mt10">
+                            <div class="article-left">
+                                <img src="../static/home/images/art.jpg"  alt="文章" />
+                            </div>
+                            <div class="article-right">
+                                <div class="article-title">
+                                    <a class="layui-badge" style="font-size: 12px;">推荐</a>
+                                    <a href="/1234">php设计模式(7)单例模式</a>
+                                </div>
+                                <div class="article-abstract">
+                                    前言：说完了工厂模式，按我们的《php设计模式(7)前言》中的规划，这次我们来讨论单例模式。
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="article-footer">
+                                <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-09-08</span>
+                                <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Administrator</span>
+                                <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">编程语言</a></span>
+                                <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;334</span>
+                                <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
+                            </div>
+                        </div>
+
+                        <div class="article shadow mt10">
+                            <div class="article-left">
+                                <img src="../static/home/images/art.jpg"  alt="文章" />
+                            </div>
+                            <div class="article-right">
+                                <div class="article-title">
+                                    <a class="layui-badge" style="font-size: 12px;">推荐</a>
+                                    <a href="/1234">php设计模式(7)单例模式</a>
+                                </div>
+                                <div class="article-abstract">
+                                    前言：说完了工厂模式，按我们的《php设计模式(7)前言》中的规划，这次我们来讨论单例模式。
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="article-footer">
+                                <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-09-08</span>
+                                <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Administrator</span>
+                                <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">编程语言</a></span>
+                                <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;334</span>
+                                <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
+                            </div>
+                        </div>
+
+                        <div class="article shadow mt10">
+                            <div class="article-left">
+                                <img src="../static/home/images/art.jpg"  alt="文章" />
+                            </div>
+                            <div class="article-right">
+                                <div class="article-title">
+                                    <a class="layui-badge" style="font-size: 12px;">推荐</a>
+                                    <a href="/1234">php设计模式(7)单例模式</a>
+                                </div>
+                                <div class="article-abstract">
+                                    前言：说完了工厂模式，按我们的《php设计模式(7)前言》中的规划，这次我们来讨论单例模式。
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="article-footer">
+                                <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;2017-09-08</span>
+                                <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;Administrator</span>
+                                <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="#">编程语言</a></span>
+                                <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;334</span>
+                                <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
+                            </div>
+                        </div>
+
+                        <div class="page"></div>
+                    </div>
+
+                </div>
+                <div class="layui-col-md4">
+                    <div class="panel">
+                        <div class="panel-body text-center">
+                            <img alt="345708673" class="img-lg img-circle mar-btm" src="../static/home/images/face.png">
+                            <p class="text-lg text-semibold mar-btm">在路上</p>
+                            <p class="text-muted" style="min-height: 50px;">技术无止境，一直在路上。 年过而立，惴惴不安，愈加发奋，孜孜求学。</p>
+                            <hr>
+                            <div class="mar-top">
+                                <a target="_blank" title="GitHub" href="https://github.com/george518"><i class="fa fa-git fa-2x"></i></a>
+                                <a target="_blank" title="给我写信" href="mailto:haodaquan2008@163.com"><i class="fa fa-envelope fa-2x"></i></a>
+                                <a target="_blank" title="QQ交流" href="http://shang.qq.com/email/stop/email_stop.html?qq=41352963"><i class="fa fa-qq fa-2x"></i></a>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel">
+                        <form class="layui-form" action="">
+                            <input type="text" name="title" required lay-verify="required" placeholder="请输入搜索内容" style="width: 80%;float: left;" autocomplete="off" class="layui-input"> <button class="layui-btn" style="width: 20%;float: left;">搜索</button>
+                            <div class="clear"></div>
+                        </form> 
+                    </div>
+
+
+
+                    <div class="panel">
+                        <h3>热门标签</h3>
+                        <hr class="layui-bg-green">
+                        <div class="tags">
+                            <a href="http://www.haodaquan.com/tag/1">php</a>
+             
+                            <a href="http://www.haodaquan.com/tag/3">mysql</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/76">Golang</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/75">Go</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/2">图片处理</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/7">图片截取</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/4">python</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/81">PHP7</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/77">PPGo_Job</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/80">JAVA</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/90">docker</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/25">PHP闪电入门</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/29">设计模式</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/18">自学</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/33">mysql那些事</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/49">PHP异常和错误</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/12">算法</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/32">工厂模式</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/6">架构</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/20">sql</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/43">PHP算法大全</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/31">笑话</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/30">幽默</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/54">编程随笔</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/41">排序算法</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/19">程序猿</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/53">函数</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/17">运维</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/9">数据库</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/28">数据类型</a>
+                         
+                            <a href="http://www.haodaquan.com/tag/78">PPGo_ApiAdmin</a>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="panel">
+                        <h3>点击排行</h3>
+                        <hr class="layui-bg-green">
+                        <ul>
+                            
+                            <li><a title="" href="http://www.haodaquan.com/83" >PPGo_ApiAdmin - golang编写的API管理后台</a></li>
+                            <li><a title="" href="http://www.haodaquan.com/29" >让程序猿笑出声的8个梗（续）</a></li>
+                            <li><a title="" href="http://www.haodaquan.com/67" >使用Redis队列解决商品数据大批量上传问题</a></li>
+                            <li><a title="" href="http://www.haodaquan.com/43" >PHP算法大全(1)基础篇-时间复杂度和...</a></li>
+                            <li><a title="" href="http://www.haodaquan.com/82">PPGo_Job跨服务器分发定时任务系统</</a></li>
+                        </ul>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="panel">
+                        <h3>推荐阅读</h3>
+                        <hr class="layui-bg-green">
+                        <ul>
+                            <li><a title="" href="http://www.haodaquan.com/83" >PPGo_ApiAdmin - golang编写的API管理后台</a></li>
+                            <li><a title="" href="http://www.haodaquan.com/29" >让程序猿笑出声的8个梗（续）</a></li>
+                            <li><a title="" href="http://www.haodaquan.com/67" >使用Redis队列解决商品数据大批量上传问题</a></li>
+                            <li><a title="" href="http://www.haodaquan.com/43" >PHP算法大全(1)基础篇-时间复杂度和...</a></li>
+                            <li><a title="" href="http://www.haodaquan.com/82">PPGo_Job跨服务器分发定时任务系统</</a></li>
+                        </ul>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="clear"></div>
+        <!-- 底部 -->
+        <div class="footer bg-white pt10">
+            <p>在路上 京ICP备14020207号-1</p>
+        </div>
+
+    <script src="../static/layui/layui.js"></script>
+    <script>
+        //一般直接写在一个js文件中
+        layui.use(['layer','element','form','carousel','laypage'], function(){
+            var layer = layui.layer
+            ,form = layui.form
+            ,element = layui.element
+            ,carousel = layui.carousel
+            ,laypage = layui.laypage;
+            //建造实例
+            carousel.render({
+                elem: '#test1'
+                ,width: '100%' //设置容器宽度
+                ,arrow: 'always' //始终显示箭头
+                //,anim: 'updown' //切换动画方式
+            });
+
+            // laypage.render({
+            //     elem: 'article-list' //注意，这里的 test1 是 ID，不用加 # 号
+            //     ,count: 50 //数据总数，从服务端得到
+            //     ,jump: function(obj, first){
+            //         //obj包含了当前分页的所有参数，比如：
+            //         console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+            //         console.log(obj.limit); //得到每页显示的条数
+            //         //首次不执行
+            //         if(first){
+            //         //do something
+            //         }
+            //     }
+            //     ,curr: location.hash.replace('#!fenye=', '') //获取起始页
+            //     ,hash: 'fenye' //自定义hash值
+            // });
+            // layer.msg('Hello World');
+        });
+    </script> 
+    </body>
+</html>

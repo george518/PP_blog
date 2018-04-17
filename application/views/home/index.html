@@ -1,0 +1,176 @@
+<!-- 主题 -->
+<div class="layui-container border pt20 mt105">
+    <div class="layui-row layui-col-space20">
+        <div class="layui-col-md8">
+            <!-- 轮播图 -->
+            <div class="layui-carousel" id="test1">
+                <div carousel-item>
+                    <?php foreach($banner as $k=>$b): ?>
+                    <div>
+                        <a href="<?=$b['url']?>"><img src="<?=$b['img_src']?>" title="<?=$b['title']?>"></a>
+                    </div>
+                    <?php endforeach; ?>
+                    
+                </div>
+            </div>
+            <!-- 热门推荐文章 -->
+            <div class="recommand mt20">
+                
+            </div>
+            
+            
+            <div class="article-list" id="article-list">
+                <div class="article shadow mt10">
+                    <div class="article-left">
+                        <img src="<?=$headline['img_src']?>"  alt="<?=$headline['title']?>"/>
+                    </div>
+                    <div class="article-right">
+                        <div class="article-title">
+                            <a class="layui-badge layui-top" style="font-size: 12px;">头条</a>
+                            <a href="/<?=$headline['id']?>"><?php echo mb_substr($headline['title'],0,26,'utf-8');?></a>
+                        </div>
+                        <div class="article-abstract">
+                            
+                            <?php echo mb_substr($headline['detail'],0,146,'utf-8');?>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="article-footer">
+                        <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;<?php echo date('Y-m-d',$headline['add_time'])?></span>
+                        <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;<?=$headline['from']?></span>
+                        <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="/<?=$headline['cate_id']?>/1">
+                            <?php echo $cate[$headline['cate_id']];?>
+                        </a></span>
+                        <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;<?=$headline['hits'];?></span>
+                        <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
+                    </div>
+                </div>
+                <?php foreach($main_list as $kk=>$art): ?>
+                <div class="article shadow mt10">
+                    <div class="article-left">
+                        <img src="<?=$art['img_src']?>"  alt="<?=$art['title']?>"/>
+                    </div>
+                    <div class="article-right">
+                        <div class="article-title">
+                            <?php if($art['is_original']==1):?>
+                            <a class="layui-badge layui-original" style="font-size: 12px;">原创</a>
+                            <?php else:?>
+                            <a class="layui-badge" style="font-size: 12px;">转载</a> 
+                            <?php endif;?>
+                            <a href="/<?=$art['id']?>"><?php echo mb_substr($art['title'],0,26,'utf-8');?></a>
+                        </div>
+                        <div class="article-abstract">
+                            <?php echo mb_substr($art['detail'],0,146,'utf-8');?>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="article-footer">
+                        <span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;<?php echo date('Y-m-d',$art['add_time'])?></span>
+                        <span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;<?=$art['from']?></span>
+                        <span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="/<?=$art['cate_id']?>/1">
+                            <?php echo $cate[$art['cate_id']];?>
+                        </a></span>
+                        <span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;<?=$art['hits'];?></span>
+                        <span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;4</span>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+
+        </div>
+        <div class="layui-col-md4">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <img alt="345708673" class="img-lg img-circle mar-btm" src="../static/home/images/face.png">
+                    <p class="text-lg text-semibold mar-btm"><?=$config['short_web_name']?></p>
+                    <p class="text-muted" style="min-height: 50px;"><?=$config['slogan']?></p>
+                    <hr>
+                    <div class="mar-top">
+                        <a target="_blank" title="GitHub" href="<?=$config['github']?>"><i class="fa fa-git fa-2x"></i></a>
+                        <a target="_blank" title="给我写信" href="mailto:<?=$config['mail']?>"><i class="fa fa-envelope fa-2x"></i></a>
+                        <a target="_blank" title="QQ交流" href="<?=$config['qq']?>"><i class="fa fa-qq fa-2x"></i></a>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <form class="layui-form" action="/search" method="post">
+                    <input type="text" name="title" required lay-verify="required" placeholder="请输入搜索内容" style="width: 80%;float: left;" autocomplete="off" class="layui-input"> <button class="layui-btn" style="width: 20%;float: left;">搜索</button>
+                    <div class="clear"></div>
+                </form> 
+            </div>
+
+            <div class="panel">
+                <h3>热门标签</h3>
+                <hr class="layui-bg-green">
+                <div class="tags">
+                    <?php foreach($tags as $k=>$t): ?>
+                        <a href="/tag/<?=$t['tag_id']?>"><?=$t['tag_name']?></a>
+                    <?php endforeach; ?>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <div class="panel">
+                <h3>点击排行</h3>
+                <hr class="layui-bg-green">
+                <ul>
+                    <?php foreach($hots as $c): ?>
+                        <li><a href="/<?=$c['id']?>" title="<?=$c['title']?>" ><?php echo mb_substr($c['title'],0,22,'utf-8');?>
+                            
+                        </a></li>
+                    <?php endforeach; ?>
+                    
+                </ul>
+                <div class="clear"></div>
+            </div>
+
+            <div class="panel">
+                <h3>推荐阅读</h3>
+                <hr class="layui-bg-green">
+                <ul>
+                    <?php foreach($recommand as $c): ?>
+                        <li><a href="/<?=$c['id']?>" title="<?=$c['title']?>" ><?php echo mb_substr($c['title'],0,22,'utf-8');?>
+                        </a></li>
+                    <?php endforeach; ?>
+                </ul>
+                <div class="clear"></div>
+            </div>
+
+            <div class="panel">
+                <h3>友情链接</h3>
+                <hr class="layui-bg-green">
+                <ul>
+                    <?php foreach($link as $l_kk=>$l): ?>  
+                    <li><a href="<?=$l['link_url']?>" title="<?=$l['link_name']?>" target="_blank" ><?=$l['link_name']?></a></li>
+                    <?php endforeach; ?>
+                </ul>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clear"></div>
+
+<script src="../static/layui/layui.js"></script>
+<script>
+    //一般直接写在一个js文件中
+    layui.use(['layer','element','form','carousel','laypage'], function(){
+        var layer = layui.layer
+        ,form = layui.form
+        ,element = layui.element
+        ,carousel = layui.carousel
+        ,laypage = layui.laypage;
+        //建造实例
+        carousel.render({
+            elem: '#test1'
+            ,width: '100%' //设置容器宽度
+            ,arrow: 'always' //始终显示箭头
+            //,anim: 'updown' //切换动画方式
+        });
+
+    });
+</script> 

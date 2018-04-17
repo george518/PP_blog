@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>
+            <?php 
+            if(isset($config['title']))
+            {
+                echo $config['title'];
+            }else
+            {
+                echo $config['web_name'];
+            }
+            ?>
+        </title>
+        <meta name="keywords" content="<?=$config['keywords']?>">
+        <meta name="description" content="<?=$config['description']?>">
+        <link rel="stylesheet" href="/static/layui/css/layui.css">
+        <link rel="stylesheet" href="/static/home/css/base.css?v=<?=$version?>">
+        <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    </head>
+
+    <body class="bg">
+        <!-- 导航 -->
+        <div class="header layui-layout layui-layout-admin">
+            <div class="layui-header">
+                <div class="layui-logo">
+                    <a href="<?=$config['host']?>" title="<?=$config['web_name']?>">
+                        <?php if($config['logo']):?>
+                            <img src="<?=$config['logo']?>" alt="<?=$config['web_name']?>">
+                        <?php else:?>
+                            <?=$config['short_web_name']?>
+                        <?php endif;?>
+                    </a>
+                    </div>
+
+                    <ul class="layui-nav layui-layout-left">
+                        <li class="layui-nav-item"><a data-cont="<?=$config['web_name']?>" title="<?=$config['web_name']?>" href="<?=$config['host']?>">首页</a></li>
+                        <?php foreach($category as $k=>$c): ?>
+                            <li class="layui-nav-item">
+                                <a href="/<?=$k?>/1" title="<?=$c?>"><?=$c?></a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <ul class="layui-nav layui-layout-right">
+                    <!-- <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                            贤心
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="">基本资料</a></dd>
+                            <dd><a href="">安全设置</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item"><a href="">退了</a></li> -->
+                </ul>
+            </div>
+            <div class="hot-tags bg-white">
+                <?php foreach($tags as $t=>$tg): ?> 
+                    <?php if($t<=10):?>
+                <a href="/tag/<?=$tg['tag_id']?>"><?=$tg['tag_name']?></a>
+                    <?php endif;?>
+                <?php endforeach;?>
+            </div>
+        </div>
