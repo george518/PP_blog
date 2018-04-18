@@ -4,7 +4,7 @@
 ** @Author: haodaquan
 ** @Date:   2018-04-07 10:47:55
 ** @Last Modified by:   haodaquan
-** @Last Modified time: 2018-04-07 10:50:31
+** @Last Modified time: 2018-04-18 10:04:58
 *************************************************************/
 
 class Home extends MY_Controller 
@@ -12,16 +12,14 @@ class Home extends MY_Controller
 	public $data;
 	public function __construct()
 	{
-		parent::__construct();
+		parent::__construct(false);
 		$this->load->model('home/config_model');
 		$this->load->model('home/category_model');
 		$this->load->model('home/banner_model');
 		$this->load->model('home/article_model');
-		$this->data['config']   = $this->config_model->get_config();
 		$this->data['category'] = $this->category_model->get_category(1);
-		$this->data['version'] = time();
 		$this->data['tags'] = $this->get_top_tag(40);
-		$this->every_page = 10;
+		$this->every_page = 2;
 	}
 	
 	/**
@@ -55,6 +53,7 @@ class Home extends MY_Controller
 		$this->load->model('admin/link_model');
 		$data['link'] = $this->link_model->getConditionData("*",'status=0',' sort DESC');
 		$data['tags'] = $this->get_top_tag(50);
+
 		$this->show('home/index.html',$data);
 	}
 	/**
@@ -65,12 +64,10 @@ class Home extends MY_Controller
 	{
 		$data = $this->data;
 
-		if($this->input->get('page'))
-		{
+		if($this->input->get('page')){
 			$param[0] = $cid = $this->input->get('cid');
 			$param[1] = $this->input->get('page');
-		}else
-		{
+		}else{
 			$param = PU();
 		}
 
@@ -85,27 +82,29 @@ class Home extends MY_Controller
 			return;
 		}
 		$data['cid'] = $cid;
-		$data['page_info'] = $data['category'][$cid];
-
+		$data['cate'] = $this->category_model->get_category(0,1);
+		$data['page_info'] = $data['cate'][$cid];
 		#优化
-		$data['config']['title'] = $data['page_info']['cate_name'].'_'.$data['config']['web_name'];
-		$data['config']['keywords'] = $data['page_info']['keywords'] ? $data['page_info']['keywords'] : $data['config']['keywords'];
-		$data['config']['description'] = $data['page_info']['description'] ? $data['page_info']['description'] : $data['config']['description'];
+		$data['web_info']['title'] = $data['page_info']['cate_name'].'_'.$data['web_info']['web_name'];
+		$data['web_info']['keywords'] = isset($data['page_info']['keywords']) ? $data['page_info']['keywords'] : $data['web_info']['keywords'];
+		$data['web_info']['description'] = isset($data['page_info']['description']) ? $data['page_info']['description'] : $data['web_info']['description'];
 
 		$where  = ' status=0 ';
 		$where .= $cid ? ' AND cate_id='.(int)$cid : '';
 		$data['main_list'] = $this->article_model->getConditionData("*",$where,' add_time DESC ',$limit_start.','.$every_page);
-		
+		#处理下一页
+		$count_num = $this->article_model->getCount('where status=0 and cate_id='.(int)$cid);
+		$data['total'] = ceil($count_num/$this->every_page);
+
 		if($data['main_list']) {
 			$data['page']  = $page+1;
 		}else{
 			$data['page']  = $page;
 		}
-
 		$data['tags'] = $this->get_top_tag(50);
 
-		#热门
-		$data['comment'] = $this->article_model->getConditionData("*",'status=0',' hits DESC',10);
+		$data['recommand'] = $this->article_model->getConditionData("id,title",'status=0 AND recommand=1',' hits DESC',10);
+		$data['hots'] = $this->article_model->getConditionData("id,title",'status=0',' hits DESC',10);
 		$this->show('home/list.html',$data);
 		
 	}
