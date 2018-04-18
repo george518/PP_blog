@@ -18,8 +18,11 @@ class Home extends MY_Controller
 		$this->load->model('home/banner_model');
 		$this->load->model('home/article_model');
 		$this->data['category'] = $this->category_model->get_category(1);
-		$this->data['tags'] = $this->get_top_tag(40);
-		$this->every_page = 2;
+		
+		$this->every_page = 10;
+
+		#左侧公共部分
+		$this->data['tags'] = $this->get_top_tag(50);
 	}
 	
 	/**
@@ -52,10 +55,10 @@ class Home extends MY_Controller
 		#友情连接
 		$this->load->model('admin/link_model');
 		$data['link'] = $this->link_model->getConditionData("*",'status=0',' sort DESC');
-		$data['tags'] = $this->get_top_tag(50);
 
 		$this->show('home/index.html',$data);
 	}
+
 	/**
 	 * [alist 列表页]
 	 * @return [type] [description]
@@ -101,12 +104,11 @@ class Home extends MY_Controller
 		}else{
 			$data['page']  = $page;
 		}
-		$data['tags'] = $this->get_top_tag(50);
 
-		$data['recommand'] = $this->article_model->getConditionData("id,title",'status=0 AND recommand=1',' hits DESC',10);
-		$data['hots'] = $this->article_model->getConditionData("id,title",'status=0',' hits DESC',10);
-		$this->show('home/list.html',$data);
+		$data['recommand'] = $this->article_model->getConditionData("id,title",'status=0 AND recommand=1 AND cate_id='.(int)$cid,' hits DESC',10);
+		$data['hots'] = $this->article_model->getConditionData("id,title",'status=0 AND cate_id='.(int)$cid,' hits DESC',10);
 		
+		$this->show('home/list.html',$data);	
 	}
 
 	/**
@@ -130,12 +132,13 @@ class Home extends MY_Controller
 			return;
 		}
 		$data['content']  = $content[0];
-		$data['page_info'] = $data['category'][$content[0]['cate_id']];
+		$data['cate'] = $this->category_model->get_category(0,1);
+		$data['page_info'] = $data['cate'][$content[0]['cate_id']];
 
 		#优化
-		$data['config']['title'] = $data['content']['title'].'_'.$data['config']['web_name'];
-		$data['config']['keywords'] = $data['content']['tag'] ? $data['content']['tag'] : $data['config']['keywords'];
-		$data['config']['description'] = $data['content']['detail'] ? $data['content']['detail'] : $data['config']['description'];
+		$data['web_info']['title'] = $data['content']['title'].'_'.$data['web_info']['web_name'];
+		$data['web_info']['keywords'] = $data['content']['tag'] ? $data['content']['tag'] : $data['web_info']['keywords'];
+		$data['web_info']['description'] = $data['content']['detail'] ? $data['content']['detail'] : $data['web_info']['description'];
 		#相关
 		$tag = explode(',',$content[0]['tag']);
 		$where = '';
@@ -159,8 +162,6 @@ class Home extends MY_Controller
 
 		$data['tag']     = $tag;
 		$data['relation'] = $this->article_model->getConditionData("*",$where,' add_time DESC ',5);
-		#热门
-		$data['comment'] = $this->article_model->getConditionData("*",'status=0',' hits DESC',10);
 
 		#增加记录
 		$this->article_model->fieldIncrease(' id='.$aid ,'hits');
@@ -171,7 +172,8 @@ class Home extends MY_Controller
 		// $data['comments'] =  isset($con['response'][1]['comments']) ? $con['response'][1]['comments'] : 123;
 		$data['comments'] =  123;
 
-		$data['tags'] = $this->get_top_tag(50);
+		$data['recommand'] = $this->article_model->getConditionData("id,title",'status=0 AND recommand=1',' hits DESC',10);
+		$data['hots'] = $this->article_model->getConditionData("id,title",'status=0',' hits DESC',10);
 		$this->show('home/content.html',$data);
 	}
 
