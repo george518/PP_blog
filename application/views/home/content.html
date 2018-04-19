@@ -1,4 +1,5 @@
 <!-- 主题 -->
+<link rel="stylesheet" href="/static/editor.md/css/editormd.min.css?v=<?=$version?>" media="all"> 
 <div class="layui-container border pt20 mt105">
     <div class="layui-row layui-col-space20">
         <div class="layui-col-md8">
@@ -9,7 +10,7 @@
                 <i class="fa fa-angle-right"></i> <a href="/<?=$content['id']?>"><?=$content['title']?></a>
             </div>
             <!-- 文章列表 -->
-            <div class="content bg-white mt10">
+            <div class="content bg-white mt10" >
                 <h1><?=$content['title']?></h1>
                 
                 <div class="tag text-center mt20">
@@ -33,9 +34,7 @@
 
                 <hr class="layui-bg-green">
 
-                <div class="article-content mt20" id="art_content">
-                    
-
+                <div class="article-content mt20" id="art_content" style="overflow: hidden;">
                      <textarea style="display:none;" placeholder="markdown语言"> <?=$content['content']?></textarea>
                     
                 </div>
@@ -185,10 +184,6 @@ layui.use(['layer','element','form','carousel','laypage'], function(){
     ,form = layui.form
     ,element = layui.element;
     var $ = layui.$; 
-
-    $('#prise').on('click',function(){
-
-    })
     
 });
 
