@@ -1,5 +1,21 @@
 <div class="layui-container border pt20 mt105">
-    <div class="layui-row layui-col-space20 panel">
-		<h1>404</h1>
+    <div class="layui-row layui-col-space20 panel" style="min-height: 480px;">
+        <div class="layui-text" style="line-height: 480px;text-align: center;">
+          <h1 style="font-size: 180px; color: #009688">
+            <i class="layui-icon" style="font-size: 180px; color: #009688;">&#xe69c;</i> 404
+          </h1>
+        </div>
 	</div>
 </div>
+
+<script src="/static/layui/layui.js"></script>
+<script>
+//一般直接写在一个js文件中
+layui.use(['element'], function(){
+    var element = layui.element
+
+    element.render();
+});
+</script> 
+
+

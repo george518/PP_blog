@@ -22,7 +22,7 @@
                     </span>
 
                     <span>
-                        <i class="fa fa-comment-o"></i> <?=$comments?>
+                        <i class="fa fa-comment-o"></i> <a href="#SOHUCS" id="changyan_count_unit"></a>
                     </span>
                     <span>
                         <i class="fa fa-eye"></i> <?=$content['hits']?>
@@ -62,7 +62,9 @@
                 <?php endif;?>
                 
                 <div class="tip text-center mt20">
-                    <div class="layui-btn layui-btn-warm layui-hide layui-show-md-inline-block"><i class="fa fa-rmb"></i> 打赏</div> <div class="layui-btn"><i class="fa fa-thumbs-o-up"></i> 赞 (30)</div>
+                    <!-- <div class="layui-btn layui-btn-warm layui-hide layui-show-md-inline-block"><i class="fa fa-rmb"></i> 打赏</div> <div class="layui-btn"><i class="fa fa-thumbs-o-up" id="prise"></i> 赞 (<?=$content['prise']?>)</div> -->
+
+                    <img src="/static/public/images/weixin.png" width="30%">
                 </div>
                 
 
@@ -83,6 +85,17 @@
                 <div class="comment">
                     <h3>评论</h3>
                     <hr>
+
+                    <!--PC打分版-->
+                    <div id="SOHUCS" sid="<?=$content['id']?>"></div>
+                    <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+                    <script type="text/javascript">
+                    window._config = { showScore: true };
+                    window.changyan.api.config({
+                    appid: 'cythWaX9C',
+                    conf: 'prod_234dd15686a274b2eab95f5eb53d495f'
+                    });
+                    </script>
                 </div>
             </div>
 
@@ -162,12 +175,20 @@
 <script src="/static/editor.md/lib/flowchart.min.js"></script>
 <script src="/static/editor.md/lib/jquery.flowchart.min.js"></script>
 <script src="/static/editor.md/editormd.js"></script>
+
+<script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js">
+</script>
 <script>
 //一般直接写在一个js文件中
 layui.use(['layer','element','form','carousel','laypage'], function(){
     var layer = layui.layer
     ,form = layui.form
     ,element = layui.element;
+    var $ = layui.$; 
+
+    $('#prise').on('click',function(){
+
+    })
     
 });
 

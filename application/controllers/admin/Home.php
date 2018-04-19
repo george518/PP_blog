@@ -53,4 +53,9 @@ class Home extends MY_Controller
 		$this->display('admin/start.html');
 	}
 
+	public function error_404()
+	{
+		echo 404;
+	}
+
 }
