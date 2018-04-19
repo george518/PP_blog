@@ -1,0 +1,15 @@
+<div class="layui-container border pt20 mt105">
+    <div class="layui-row layui-col-space20 panel">
+        <!-- 位置导航 -->
+        <div class="header-nav bg-white">
+            <i class="fa fa-home fa-fw"></i> <a href="<?=$web_info['host']?>">首页</a> 
+            <i class="fa fa-angle-right"></i> <a href="/">标签云</a>
+        </div>
+
+		<div class="tags article-list bg-white" style="min-height: 500px;">
+		    <?php foreach($tags as $t=>$tg): ?>               
+				<a href="/tag/<?=$tg['tag_id']?>" title="<?=$tg['tag_name']?>" draggable="false"><?=$tg['tag_name']?> <span class="badge"><?=$tg['num']?></span></a>
+			<?php endforeach; ?> 
+		</div>
+	</div>
+</div>

@@ -4,7 +4,7 @@
 ** @Author: haodaquan
 ** @Date:   2018-04-07 10:47:55
 ** @Last Modified by:   haodaquan
-** @Last Modified time: 2018-04-18 10:04:58
+** @Last Modified time: 2018-04-19 10:24:06
 *************************************************************/
 
 class Home extends MY_Controller 
@@ -98,12 +98,8 @@ class Home extends MY_Controller
 		#处理下一页
 		$count_num = $this->article_model->getCount('where status=0 and cate_id='.(int)$cid);
 		$data['total'] = ceil($count_num/$this->every_page);
-
-		if($data['main_list']) {
-			$data['page']  = $page+1;
-		}else{
-			$data['page']  = $page;
-		}
+		$data['page']  = $page;
+		
 
 		$data['recommand'] = $this->article_model->getConditionData("id,title",'status=0 AND recommand=1 AND cate_id='.(int)$cid,' hits DESC',10);
 		$data['hots'] = $this->article_model->getConditionData("id,title",'status=0 AND cate_id='.(int)$cid,' hits DESC',10);
@@ -185,9 +181,9 @@ class Home extends MY_Controller
 	{
 		$data = $this->data;
 		$data['tags'] = $this->get_top_tag();
-		$data['config']['title'] = '标签云_'.$data['config']['web_name'];
-		$data['config']['keywords'] =  '标签云,'.$data['config']['keywords'];
-		$data['config']['description'] = '标签云'.$data['config']['description'];
+		$data['web_info']['title'] = '标签云_'.$data['web_info']['web_name'];
+		$data['web_info']['keywords'] =  '标签云,'.$data['web_info']['keywords'];
+		$data['web_info']['description'] = '标签云'.$data['web_info']['description'];
 		$this->show('home/tags.html',$data);
 	}
 
@@ -198,18 +194,13 @@ class Home extends MY_Controller
 	public  function tag_search()
 	{
 		$data  = $this->data;
-
-		if($this->input->get('page'))
-		{
-			$param[0] = $this->input->get('page');
-			$param[1] = $this->input->get('tid');
-			
-		}else
-		{
-			$param = PU();
+		$param = PU();
+		if($this->input->get('p')){
+			$page = $this->input->get('p');
+		}else{
+			$page = 1;
 		}
 
-		$page = $param[0]!='tag' ? (int)$param[0] : 1;
 		$every_page  = $this->every_page;
 		$limit_start = ($page-1)*$every_page;
 		$tag_id = $param[1];
@@ -237,20 +228,17 @@ class Home extends MY_Controller
 			$data['main_list'] = $this->article_model->getConditionData('*',$where,' add_time DESC ',$limit_start.','.$every_page); 
 		}
 
-		if($data['main_list']) {
-			$data['page']  = $page+1;
-		}else{
-			$data['page']  = $page;
-		}
+		#处理下一页
+		$count_num = $this->article_model->getCount('where '.$where);
+		$data['total'] = ceil($count_num/$this->every_page);
+		$data['page']  = $page;
 
-		$data['tags'] = $this->get_top_tag(50);
+		$data['recommand'] = $this->article_model->getConditionData("id,title",'status=0 AND recommand=1',' hits DESC',10);
+		$data['hots'] = $this->article_model->getConditionData("id,title",'status=0',' hits DESC',10);
 
-		#热门
-		$data['comment'] = $this->article_model->getConditionData("*",'status=0',' hits DESC',10);
-
-		$data['config']['title'] = $tag_info[0]['tag_name'].'_'.$data['config']['web_name'];
-		$data['config']['keywords'] = $tag_info[0]['tag_name'].','.$data['config']['keywords'];
-		$data['config']['description'] = $tag_info[0]['tag_name'].'-'.$data['config']['description'];
+		$data['web_info']['title'] = $tag_info[0]['tag_name'].'_'.$data['web_info']['web_name'];
+		$data['web_info']['keywords'] = $tag_info[0]['tag_name'].','.$data['web_info']['keywords'];
+		$data['web_info']['description'] = $tag_info[0]['tag_name'].'-'.$data['web_info']['description'];
 		$this->show('home/tag_search.html',$data);
 	}
 
@@ -262,15 +250,15 @@ class Home extends MY_Controller
 	{
 		$data  = $this->data;
 
-		if($this->input->get('page'))
+		if($this->input->get('p'))
 		{
-			$param[0] = $this->input->get('page');
+			$param[0] = $this->input->get('p');
 			$param[1] = $this->input->get('w');
 			
 		}else
 		{
 			$param[0] = 1;
-			$param[1] = $this->input->post('keyword');
+			$param[1] = $this->input->post('title');
 		}
 
 		$page = isset($param[0]) ? (int)$param[0] : 1;
@@ -289,20 +277,26 @@ class Home extends MY_Controller
 			$data['main_list'] = $this->article_model->getConditionData('*',$where,' add_time DESC ',$limit_start.','.$every_page); 
 		}
 
-		if($data['main_list']) {
-			$data['page']  = $page+1;
-		}else{
-			$data['page']  = $page;
-		}
+		#处理下一页
+		$count_num = $this->article_model->getCount('where '.$where);
+		$data['total'] = ceil($count_num/$this->every_page);
 
-		$data['tags'] = $this->get_top_tag(50);
+		// if($data['main_list']) {
+		// 	$data['page']  = $page+1;
+		// }else{
+		// 	$data['page']  = $page;
+		// }
+		$data['page']  = $page;
 
 		#热门
-		$data['comment'] = $this->article_model->getConditionData("*",'status=0',' hits DESC',10);
+		$data['recommand'] = $this->article_model->getConditionData("id,title",'status=0 AND recommand=1',' hits DESC',10);
+		$data['hots'] = $this->article_model->getConditionData("id,title",'status=0',' hits DESC',10);
 
-		$data['config']['title'] = $word.'_'.$data['config']['web_name'];
-		$data['config']['keywords'] = $word.','.$data['config']['keywords'];
-		$data['config']['description'] = $word.'-'.$data['config']['description'];
+		$data['web_info']['title'] = $word.'_'.$data['web_info']['web_name'];
+		$data['web_info']['keywords'] = $word.','.$data['web_info']['keywords'];
+		$data['web_info']['description'] = $word.'-'.$data['web_info']['description'];
+
+		
 
 		$this->show('home/search.html',$data);
 	}

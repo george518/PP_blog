@@ -5,8 +5,7 @@
             <!-- 位置导航 -->
             <div class="header-nav bg-white">
                 <i class="fa fa-home fa-fw"></i> <a href="<?=$web_info['host']?>">首页</a> 
-                <i class="fa fa-angle-right"></i> <a href="/<?=$cid?>/1"><?php echo $page_info['cate_name'];?></a>
-                <i class="fa fa-angle-right"></i> <a href="/<?=$cid?>/<?=($page-1)?>">第<?=$page?>页</a>
+                <i class="fa fa-angle-right"></i> <a href="/tag/<?=$tag_info['id']?>">标签：<?php echo $tag_info['tag_name'];?></a>
             </div>
             <!-- 文章列表 -->
             <div class="article-list" id="article-list">
@@ -40,14 +39,15 @@
                     </div>
                 </div>
                 <?php endforeach; ?>
+    
 
                 <div class="page">
                     <div class="layui-box layui-laypage layui-laypage-default">
                         <?php if($page>1):?>
-                            <a href="/<?=$cid?>/<?php echo ($page-1);?>" class="layui-laypage-prev" >上一页</a>
+                            <a href="/tag/<?=$tag_info['id']?>?p=<?=$page-1?>" class="layui-laypage-prev" >上一页</a>
                         <?php endif;?>
                         <?php if($page<$total):?>
-                            <a href="/<?=$cid?>/<?php echo ($page+1);?>" class="layui-laypage-next">下一页</a>  
+                            <a href="/tag/<?=$tag_info['id']?>?p=<?=$page+1?>" class="layui-laypage-next">下一页</a>  
                         <?php endif;?>
                     </div>
                 </div>

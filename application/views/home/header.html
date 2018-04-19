@@ -21,8 +21,8 @@
 
     <body class="bg">
         <!-- 导航 -->
-        <div class="header layui-layout layui-layout-admin">
-            <div class="layui-header">
+        <div class="header layui-layout layui-layout-admin pp-header-bg">
+            <div class="layui-header pp-header">
                 <div class="layui-logo">
                     <a href="<?=$web_info['host']?>" title="<?=$web_info['web_name']?>">
                         <?php if($web_info['logo']):?>
@@ -31,16 +31,16 @@
                             <?=$web_info['short_web_name']?>
                         <?php endif;?>
                     </a>
-                    </div>
+                </div>
 
-                    <ul class="layui-nav layui-layout-left">
-                        <li class="layui-nav-item"><a data-cont="<?=$web_info['web_name']?>" title="<?=$web_info['web_name']?>" href="<?=$web_info['host']?>">首页</a></li>
-                        <?php foreach($category as $k=>$c): ?>
-                            <li class="layui-nav-item">
-                                <a href="/<?=$k?>/1" title="<?=$c?>"><?=$c?></a>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
+                <ul class="layui-nav layui-layout-left">
+                    <li class="layui-nav-item"><a data-cont="<?=$web_info['web_name']?>" title="<?=$web_info['web_name']?>" href="<?=$web_info['host']?>">首页</a></li>
+                    <?php foreach($category as $k=>$c): ?>
+                        <li class="layui-nav-item">
+                            <a href="/<?=$k?>/1" title="<?=$c?>"><?=$c?></a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
                 <ul class="layui-nav layui-layout-right">
                     <!-- <li class="layui-nav-item">
                         <a href="javascript:;">
@@ -56,10 +56,13 @@
                 </ul>
             </div>
             <div class="hot-tags bg-white">
-                <?php foreach($tags as $t=>$tg): ?> 
+                <div class="pp-header" style="padding-left: 20px;">
+
+                    <?php foreach($tags as $t=>$tg): ?> 
                     <?php if($t<=10):?>
-                <a href="/tag/<?=$tg['tag_id']?>"><?=$tg['tag_name']?></a>
-                    <?php endif;?>
-                <?php endforeach;?>
+                    <a href="/tag/<?=$tg['tag_id']?>"><?=$tg['tag_name']?></a>
+                        <?php endif;?>
+                    <?php endforeach;?>
+                </div>
             </div>
         </div>

@@ -1,11 +1,19 @@
 /*
 * @Author: haodaquan
 * @Date:   2018-04-04 20:42:10
-* @Last Modified by:   haodaquan
-* @Last Modified time: 2018-04-06 20:58:57
+* @Last Modified by:   george
+* @Last Modified time: 2018-04-19 08:42:56
 */
 
 /*公共部分样式开始*/
+	.pp-header{
+		width: 1170px;
+		margin:0px auto;
+		overflow: hidden;
+	}
+	.pp-header-bg{
+		background: #23262E;
+	}
 	.bg{
 		background: url(../images/bg.jpg) repeat;
 	    transition: all 0.3s ease-in-out;
