@@ -6,8 +6,8 @@
             <div class="layui-carousel" id="test1">
                 <div carousel-item>
                     <?php foreach($banner as $k=>$b): ?>
-                    <div>
-                        <a href="<?=$b['url']?>"><img src="<?=$b['img_src']?>" title="<?=$b['title']?>"></a>
+                    <div style="width: 100%">
+                        <a href="<?=$b['url']?>"><img src="<?=$b['img_src']?>" width="100%"  title="<?=$b['title']?>"></a>
                     </div>
                     <?php endforeach; ?>
                     

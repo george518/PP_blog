@@ -2,12 +2,19 @@
 * @Author: haodaquan
 * @Date:   2018-04-04 20:42:10
 * @Last Modified by:   george
-* @Last Modified time: 2018-04-19 08:42:56
+* @Last Modified time: 2018-04-20 10:58:19
 */
 
 /*公共部分样式开始*/
+	body{
+		font-size: 16px !important;
+	}
+	.layui-container{
+		width: 95%;
+		margin: 0px auto;
+	}
 	.pp-header{
-		width: 1170px;
+		width: 100%;
 		margin:0px auto;
 		overflow: hidden;
 	}
@@ -62,6 +69,7 @@
 
 	a{
 		color: #666;
+		font-size: 16px !important;
 	}
 	a:hover{
 		color: #009688;
@@ -69,7 +77,7 @@
 
 	.layui-header .layui-logo a{
 		color: #009688;
-		font-size: 32px;
+		font-size: 32px !important;
 	}
 /*公共部分样式结束*/
 
@@ -103,8 +111,10 @@
 	}
 
 	.header-nav{
-		height: 30px;
-		line-height: 30px;
+		height: 40px;
+		line-height: 40px;
+		padding-left: 5px;
+		border-bottom: 1px solid #009688;
 	}
 
 	.header-nav a{
@@ -368,7 +378,11 @@
 /*底部样式开始*/
 	.footer{
 		height: 60px;
+		width: 100%;
+		margin-top: 60px;
 		border-top: 2px solid #009688;
+		position: fixed;
+	    bottom: 0px;
 	}
 
 	.footer p{
@@ -475,6 +489,11 @@
 		display: block;
 		width: 20%;
 		float: right;
+	}
+
+	.editormd-html-preview, .editormd-preview-container{
+		width: 90% !important;
+		font-size: 16px !important;
 	}
 /*内容页结束*/
 

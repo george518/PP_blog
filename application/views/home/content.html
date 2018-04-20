@@ -10,16 +10,16 @@
                 <i class="fa fa-angle-right"></i> <a href="/<?=$content['id']?>"><?=$content['title']?></a>
             </div>
             <!-- 文章列表 -->
-            <div class="content bg-white mt10" >
+            <div class="content bg-white" >
                 <h1><?=$content['title']?></h1>
                 
-                <div class="tag text-center mt20">
+                <div class="tag text-center mt20" style="color:#666">
                     <span>
                         <i class="fa fa-clock-o"></i> <?php echo date('Y-m-d H:i:s',$content['add_time']);?>
                     </span> 
                     <span>
                         <i class="fa fa-user-o"></i> 
-                        <font style="color: rgb(255, 87, 34);"><?=$content['from']?></font>
+                        <?=$content['from']?>
                     </span>
 
                     <span>
@@ -32,11 +32,12 @@
 
                 <div class="clear"></div>
 
-                <hr class="layui-bg-green">
+                <hr class="layui-bg">
 
-                <div class="article-content mt20" id="art_content" style="overflow: hidden;">
-                     <textarea style="display:none;" placeholder="markdown语言"> <?=$content['content']?></textarea>
-                    
+                <div class="article-content mt20 editormd-preview-theme-dark" id="art_content" style="overflow: hidden;">
+                    <textarea style="display:none;" name="markdown" style="margin:0px auto;">
+                    <?=$content['content']?>
+                    </textarea>
                 </div>
 
                 
