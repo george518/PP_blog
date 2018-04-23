@@ -4,7 +4,7 @@
 ** @Author: haodaquan
 ** @Date:   2018-04-07 09:44:59
 ** @Last Modified by:   haodaquan
-** @Last Modified time: 2018-04-18 10:19:41
+** @Last Modified time: 2018-04-23 10:41:54
 *************************************************************/
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 class MY_Model extends CI_Model
@@ -93,8 +93,19 @@ class MY_Model extends CI_Model
 		$orderby = '';
 		if(isset($param['sort']))
 		{
-			$sortArr = explode('.',$param['sort']);
-			$orderby = ' ORDER BY '.$sortArr[0].' '.$sortArr[1];
+			$orderby = ' ORDER BY ';
+			if (strpos($param['sort'],',')!==false) {
+				$sortArr = explode(',',$param['sort']);
+				foreach ($sortArr as $key => $value) {
+					$sort = explode('.',$value);
+					$orderby .= $sort[0].' '.$sort[1].',';
+				}
+			}else{
+				$sortArr = explode('.',$param['sort']);
+				$orderby .= ' '.$sortArr[0].' '.$sortArr[1];
+			}
+
+			$orderby = trim($orderby,',');
 		}
 
 

@@ -4,7 +4,7 @@
 ** @Author: haodaquan
 ** @Date:   2018-04-10 21:34:11
 ** @Last Modified by:   haodaquan
-** @Last Modified time: 2018-04-12 17:53:04
+** @Last Modified time: 2018-04-23 10:42:08
 *************************************************************/
 class Article extends MY_Controller
 {
@@ -30,6 +30,7 @@ class Article extends MY_Controller
 	{
 		$post = $this->input->post();
         $post['status|='] = 0;
+        $post['sort'] = "recommand.DESC,id.DESC";
 		$this->query($post);
 	}
 
@@ -43,7 +44,7 @@ class Article extends MY_Controller
         if(empty($data)) return [];
         foreach ($data['data'] as $key => $value) {
         	$data['data'][$key]['cate_name'] = isset($category[$value['cate_id']]) ? $category[$value['cate_id']] : '未知';
-
+            $data['data'][$key]['title'] = '<a href="/'.$value['id'].'" target="_blank">'.$value['title'].'</a>';
         	if($value['recommand']==1){
         		$data['data'][$key]['title'] = $data['data'][$key]['title'].$recommand_tag;
         	}
