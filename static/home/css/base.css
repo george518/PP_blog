@@ -2,7 +2,7 @@
 * @Author: haodaquan
 * @Date:   2018-04-04 20:42:10
 * @Last Modified by:   george
-* @Last Modified time: 2018-04-20 11:20:59
+* @Last Modified time: 2018-04-27 16:05:46
 */
 
 /*公共部分样式开始*/
@@ -14,10 +14,12 @@
 	}
 	.layui-container{
 		width: 95%;
+		max-width: 1564px !important;
 		margin: 0px auto;
 	}
 	.pp-header{
 		width: 100%;
+		max-width: 1564px !important;
 		margin:0px auto;
 		overflow: hidden;
 	}
