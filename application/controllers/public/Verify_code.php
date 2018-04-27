@@ -4,7 +4,7 @@
 ** @Author: haodaquan
 ** @Date:   2018-04-07 17:09:50
 ** @Last Modified by:   haodaquan
-** @Last Modified time: 2018-04-20 18:41:11
+** @Last Modified time: 2018-04-27 15:26:58
 *************************************************************/
 
 class Verify_code extends MY_Controller
@@ -20,7 +20,7 @@ class Verify_code extends MY_Controller
 	public function set_verify_code()
 	{
 		$verify_code = $this->verify_code();
-		$img_url = $this->data['web_info']['host'].'/captcha/'.$verify_code['filename'];
+		$img_url = '/captcha/'.$verify_code['filename'];
 		$this->session->set_userdata('verify_code', $verify_code['word']);
 		$this->ajaxReturn([$img_url],200,'success');
 	}
@@ -32,7 +32,7 @@ class Verify_code extends MY_Controller
 		$vals = array(
 		    // 'word'      => 'Random word',
 		    'img_path'  => 'captcha/',
-		    'img_url'   => $this->data['web_info']['host'].'/captcha/',
+		    'img_url'   => '/captcha/',
 		    // 'font_path' => 'static/public/font/TronRegular.ttf',
 		    'font_path' => 'static/public/font/Racing.otf',
 
