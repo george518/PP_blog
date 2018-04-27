@@ -384,10 +384,10 @@
 	.footer{
 		height: 60px;
 		width: 100%;
-		margin-top: 100px;
+		margin-top: 10px;
 		border-top: 2px solid #009688;
-		position: fixed;
-	    bottom: 0px;
+		/*position: fixed;
+	    bottom: 0px;*/
 	}
 
 	.footer p{
