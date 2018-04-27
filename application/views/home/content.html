@@ -63,8 +63,9 @@
                 
                 <div class="tip text-center mt20">
                     <!-- <div class="layui-btn layui-btn-warm layui-hide layui-show-md-inline-block"><i class="fa fa-rmb"></i> 打赏</div> <div class="layui-btn"><i class="fa fa-thumbs-o-up" id="prise"></i> 赞 (<?=$content['prise']?>)</div> -->
-
-                    <img src="/static/public/images/weixin.png" width="30%">
+                    <?php if($content['is_original']==1):?>
+                        <img src="/static/public/images/weixin.png" width="220">
+                    <?php endif;?>
                 </div>
                 
 
