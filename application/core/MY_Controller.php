@@ -4,7 +4,7 @@
 ** @Author: haodaquan
 ** @Date:   2018-04-07 09:44:32
 ** @Last Modified by:   haodaquan
-** @Last Modified time: 2018-04-11 11:38:12
+** @Last Modified time: 2018-04-27 12:18:58
 *************************************************************/
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -24,7 +24,12 @@ class MY_Controller extends CI_Controller
 			$this->data['user'] = $this->user_model->check_user();
 			$this->module = 'admin';
 		}
-		$this->data['version'] = time();
+		if (ENVIRONMENT=='development') {
+			$this->data['version'] = 20180427;
+		}else{
+			$this->data['version'] = time();
+		}
+		
 		$this->data['web_info'] = $this->web_config();
 	}
 
