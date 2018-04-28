@@ -5,7 +5,7 @@
 ** @Author: george
 ** @Date:   2018-04-11 15:23:44
 ** @Last Modified by:   george
-** @Last Modified time: 2018-04-11 16:13:10
+** @Last Modified time: 2018-04-28 10:55:21
 *************************************************************/
 class Upload extends MY_Controller
 {
@@ -16,7 +16,8 @@ class Upload extends MY_Controller
     public $img_type = [
         'banner'=>0,
         'article'=>1,
-        'md_img'=>2
+        'md_img'=>2,
+        'config'=>3
     ];
 
     public function __construct()

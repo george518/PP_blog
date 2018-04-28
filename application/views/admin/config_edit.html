@@ -33,6 +33,27 @@
             <div class="layui-form-mid layui-word-aux">*</div>
         </div>
 
+        
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">赞赏二维码</label>
+            <div class="layui-input-inline width60">
+                <div class="layui-row">
+                    <div class="layui-col-xs6">
+                        <input type="text" name="prise_code" lay-verify="prise_code" autocomplete="off" id="prise_code"  placeholder="赞赏二维码" readonly="" class="layui-input" value="<?php echo isset($web_info['prise_code']) ? $web_info['prise_code'] : ''; ?>">
+                    </div>
+                    <div class="layui-col-xs6">
+                        <div class="layui-upload">
+                            <a class="input-file input-fileup layui-btn layui-btn-primary" href="javascript:;">
+                                选择图片<input size="20" type="file" name="myfile" id="myfile">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div style="border: 1px solid #efeeff;width: 100px;height: 100px;margin-top:10px;float: left;"><img src="<?php echo isset($web_info['prise_code']) ? $web_info['prise_code'] : '/static/public/images/weixin.png'; ?>" alt="图片" width="100" height="100" id="img_src_show"></div>
+            </div>
+        </div>
+
         <div class="layui-form-item">
             <label class="layui-form-label">网址</label>
             <div class="layui-input-inline width40">
@@ -90,6 +111,15 @@
             </div>
             <div class="layui-form-mid layui-word-aux">*</div>
         </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">统计代码</label>
+            <div class="layui-input-inline width40">
+                <textarea name="count_code"  placeholder="统计代码" class="layui-textarea"><?php echo  isset($web_info['count_code']) ? $web_info['count_code'] : ''; ?></textarea>
+            </div>
+            <div class="layui-form-mid layui-word-aux">*</div>
+        </div>
+
 
         <div class="layui-form-item">
             <div class="layui-input-block">
@@ -102,7 +132,7 @@
 
 <script src="/static/layui/layui.js"></script>
 <script>
-    layui.use(['form','element','jquery','layer'], function(){
+    layui.use(['form','element','jquery','layer','upload'], function(){
         var form = layui.form;
         var element = layui.element;
         var $ = layui.jquery;
@@ -121,6 +151,30 @@
             }, "json");
             return false;
         });
+
+        //上传图片
+        var upload = layui.upload;
+        upload.render({
+            elem: '#myfile'
+            ,url: '/public/upload/image'
+            ,auto: true //选择文件后不自动上传
+            ,exts: 'jpg|png|gif|jpeg'
+            ,data: {w:0,h:0,'file_path':'config'}
+            ,done: function(res, index, upload){
+                //假设code=0代表上传成功
+                if(res.code == 0){
+                    $('#prise_code').val(res.data.src);
+                    $('#img_src_show').attr('src',res.data.src);
+                }else{
+                    layer.msg(res.msg);
+                    return;
+                }
+            }
+            ,error: function(index, upload){
+                layer.msg("上传失败，请重新上传");
+                return;
+            }
+        }); 
 
         element.render();
 
