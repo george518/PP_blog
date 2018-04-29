@@ -206,6 +206,15 @@ class Home extends MY_Controller
 		$tag_id = $param[1];
 		$this->load->model('home/tag_model');
 
+		if (!is_numeric($tag_id)) {
+			$tag = $this->tag_model->getConditionData('id',' tag_name like "%'.urldecode($tag_id).'%"',' id desc',1);
+			if (!isset($tag[0]['id'])) {
+				$this->error_404();
+			}
+			$tag_id = $tag[0]['id'];
+		}
+		
+
 		$tag_info = $this->tag_model->getConditionData('*',' id='.(int)$tag_id);
 		$data['tag_info'] = $tag_info[0];
 
@@ -249,7 +258,6 @@ class Home extends MY_Controller
 	public  function search()
 	{
 		$data  = $this->data;
-
 		if($this->input->get('p'))
 		{
 			$param[0] = $this->input->get('p');
