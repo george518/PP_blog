@@ -56,5 +56,5 @@ $route['translate_uri_dashes'] = FALSE;
 $route['(:num)/(:num)'] = 'home/alist';
 $route['(:num)'] = 'home/content';
 $route['tags'] = 'home/tags';
-$route['tag/(:num)'] = 'home/tag_search';
+$route['tag/(:any)'] = 'home/tag_search';
 $route['search'] = 'home/search';
