@@ -195,15 +195,20 @@ class Home extends MY_Controller
 	{
 		$data  = $this->data;
 		$param = PU();
+
 		if($this->input->get('p')){
 			$page = $this->input->get('p');
 		}else{
 			$page = 1;
 		}
-
 		$every_page  = $this->every_page;
 		$limit_start = ($page-1)*$every_page;
-		$tag_id = $param[1];
+
+		if (strpos($param[1], '?')) {
+			$tag_id = substr($param[1],0,strpos($param[1], '?'));
+		}else{
+			$tag_id = $param[1];
+		}
 		$this->load->model('home/tag_model');
 
 		if (!is_numeric($tag_id)) {

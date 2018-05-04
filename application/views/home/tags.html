@@ -8,7 +8,7 @@
 
 		<div class="tags article-list bg-white" style="min-height: 500px;">
 		    <?php foreach($tags as $t=>$tg): ?>               
-				<a href="/tag/<?=$tg['tag_id']?>" title="<?=$tg['tag_name']?>" draggable="false"><?=$tg['tag_name']?> <span class="badge"><?=$tg['num']?></span></a>
+				<a href="/tag/<?=$tg['tag_name']?>" title="<?=$tg['tag_name']?>" draggable="false"><?=$tg['tag_name']?> <span class="badge"><?=$tg['num']?></span></a>
 			<?php endforeach; ?> 
 		</div>
 	</div>
