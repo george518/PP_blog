@@ -175,7 +175,7 @@ class Article extends MY_Controller
         foreach ($tags_arr as $key => $value) {
             if(!$value) continue;
             #判断是否存在
-            $res = $this->tag_model->getConditionData('*','tag_name like "%'.$value.'%"');
+            $res = $this->tag_model->getConditionData('*','tag_name="'.$value.'"');
             if(!isset($res[0]['id']))
             {
                 $tag_id = $this->tag_model->addData(['tag_name'=>$value]);
