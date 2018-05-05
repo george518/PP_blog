@@ -1,7 +1,7 @@
 <?php
 
 /************************************************************
-** @Description: file
+** @Description: 数据迁移类
 ** @Author: george
 ** @Date:   2018-04-20 16:20:34
 ** @Last Modified by:   george
@@ -72,5 +72,41 @@ class Move extends MY_Controller
 
 		return false;
 	}
+
+	/**
+	 * [repair_tag 修复文章tag]
+	 * @return [type] [description]
+	 */
+	public function repair_tag()
+	{
+		$this->load->model('admin/article_model');
+		$data = $this->article_model->getConditionData('id,tag',' 1=1');
+		foreach ($data as $key => $value) {
+			$this->tag_handle($value['id'],$value['tag'],0);
+		}
+
+	}
+
+	private function tag_handle($aid,$tags,$type=1)
+    {
+        $tags_arr = explode(',',trim($tags,','));
+        $this->load->model('admin/tag_model');
+        $this->load->model('admin/article_tag_model');
+        $tag_id_arr = [];
+        foreach ($tags_arr as $key => $value) {
+            if(!$value) continue;
+            #判断是否存在
+            $res = $this->tag_model->getConditionData('*','tag_name like "%'.$value.'%"');
+            if(!isset($res[0]['id']))
+            {
+                $tag_id = $this->tag_model->addData(['tag_name'=>$value]);
+                $tag_id_arr[] = $tag_id;
+            }else
+            {
+                $tag_id_arr[] = $res[0]['id'];
+            }
+        }
+        return $this->article_tag_model->save_art_tag($aid,$tag_id_arr,$type);
+    }
 }
 

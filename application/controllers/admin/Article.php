@@ -153,6 +153,13 @@ class Article extends MY_Controller
         }
     }
 
+    // public function test(){
+    //     $id = 1;
+    //     $tags = '你好,PHP方法,pp_blog';
+    //     $type = 1;
+    //    echo  $this->tag_handle($id,$tags,$type);
+    // }
+
         /**
      * [tag_handle 标签处理]
      * @param  [type]  $tags [标签字符串，逗号隔开]
@@ -161,14 +168,14 @@ class Article extends MY_Controller
      */
     private function tag_handle($aid,$tags,$type=1)
     {
-        $tags_arr = explode(',',$tags);
+        $tags_arr = explode(',',trim($tags,','));
         $this->load->model('admin/tag_model');
         $this->load->model('admin/article_tag_model');
         $tag_id_arr = [];
         foreach ($tags_arr as $key => $value) {
             if(!$value) continue;
             #判断是否存在
-            $res = $this->tag_model->getConditionData('*','tag_name="'.$value.'"');
+            $res = $this->tag_model->getConditionData('*','tag_name like "%'.$value.'%"');
             if(!isset($res[0]['id']))
             {
                 $tag_id = $this->tag_model->addData(['tag_name'=>$value]);
