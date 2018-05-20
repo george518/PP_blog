@@ -14,9 +14,9 @@
                 </div>
             </div>
             <!-- 热门推荐文章 -->
-            <div class="recommand mt20">
+<!--             <div class="recommand mt20">
                 
-            </div>
+            </div> -->
             
             
             <div class="article-list" id="article-list">
@@ -162,13 +162,19 @@
         ,element = layui.element
         ,carousel = layui.carousel
         ,laypage = layui.laypage;
+
         //建造实例
-        carousel.render({
-            elem: '#test1'
-            ,width: '100%' //设置容器宽度
-            ,arrow: 'always' //始终显示箭头
-            //,anim: 'updown' //切换动画方式
-        });
+        var width = layui.$(document).width();
+
+        if(width>=1200){
+            carousel.render({
+                elem: '#test1'
+                ,width: '100%' //设置容器宽度
+                ,arrow: 'always' //始终显示箭头
+                //,anim: 'updown' //切换动画方式
+            });
+        }
+
 
     });
 </script> 
