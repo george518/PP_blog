@@ -90,19 +90,19 @@ class Article extends MY_Controller
         $this->load->model($this->module.'/'.$this->model_name);
         $model = $this->model_name;
        	$img = $this->$model->getConditionData('distinct(img_src),id','status=0',' id desc','50');
-		$path = dirname(BASEPATH);
+	$path = dirname(BASEPATH);
        	$this->data['img'] = [];
         $imgs = [];
        	foreach ($img as $key => $value) {
-       		$filename = $path.$value['img_src'];
-            $md5 = md5($value['img_src']);
-       		if (file_exists($filename) && !in_array($md5, $imgs)) {
-       			$this->data['img'][] = $value;
-       		}else{
-                $imgs[] = $md5;
-            }
-       	}
 
+	    $filename = $path.$value['img_src'];
+            $md5 = md5($value['img_src']);
+		if(!file_exists($filename)) continue;
+       		if (isset($imgs[$md5])) continue;
+		$this->data['img'][] = $value;
+                $imgs[$md5] = 1;
+            	
+       	}
         $this->data['page_title'] = '最近图片';
         $this->display('admin/article_img_add.html');
     }
