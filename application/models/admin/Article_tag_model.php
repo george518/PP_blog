@@ -38,6 +38,7 @@ class Article_tag_model extends MY_Model
 			$add_sql .= '('.$article_id.','.$value.'),';
 		}
 		$add_sql = rtrim($add_sql,',');
+	
 		return $this->db_pp->query($add_sql);
 	}
 }
