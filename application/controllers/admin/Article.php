@@ -81,7 +81,7 @@ class Article extends MY_Controller
     public function tag_add()
     {
     	$this->load->model('admin/tag_model');
-    	$this->data['tag'] = $this->tag_model->getConditionData('id,tag_name','status=0',' is_top DESC');
+    	$this->data['tag'] = $this->tag_model->getConditionData('id,tag_name','status=0',' is_top DESC,id DESC');
     	$this->display('admin/article_tag_add.html');
     }
 
@@ -92,15 +92,18 @@ class Article extends MY_Controller
        	$img = $this->$model->getConditionData('distinct(img_src),id','status=0',' id desc','50');
 		$path = dirname(BASEPATH);
        	$this->data['img'] = [];
-        $img = [];
+        $imgs = [];
        	foreach ($img as $key => $value) {
        		$filename = $path.$value['img_src'];
-       		if (file_exists($filename) && !in_array(md5($value), $img)) {
+            $md5 = md5($value['img_src']);
+       		if (file_exists($filename) && !in_array($md5, $imgs)) {
        			$this->data['img'][] = $value;
        		}else{
-                $img[] = md5($value);
+                $imgs[] = $md5;
             }
        	}
+
+        $this->data['page_title'] = '最近图片';
         $this->display('admin/article_img_add.html');
     }
 
