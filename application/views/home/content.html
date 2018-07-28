@@ -21,10 +21,6 @@
                         <i class="fa fa-user-o"></i> 
                         <?=$content['from']?>
                     </span>
-
-                    <span>
-                        <i class="fa fa-comment-o"></i> <a href="#SOHUCS" id="changyan_count_unit"></a>
-                    </span>
                     <span>
                         <i class="fa fa-eye"></i> <?=$content['hits']?>
                     </span>
@@ -36,6 +32,8 @@
 
                 <div class="article-content mt20 editormd-preview-theme-dark" id="art_content" style="overflow: hidden;">
                     <textarea style="display:none;" name="markdown" style="margin:0px auto;">
+
+[TOC]
                     <?=$content['content']?>
                     </textarea>
                 </div>
@@ -87,21 +85,7 @@
 
                 <div class="clear"></div>
 
-                <div class="comment">
-                    <h3>评论</h3>
-                    <hr>
-
-                    <!--PC打分版-->
-                    <div id="SOHUCS" sid="<?=$content['id']?>"></div>
-                    <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
-                    <script type="text/javascript">
-                    window._config = { showScore: true };
-                    window.changyan.api.config({
-                    appid: 'cythWaX9C',
-                    conf: 'prod_234dd15686a274b2eab95f5eb53d495f'
-                    });
-                    </script>
-                </div>
+                
             </div>
 
         </div>
@@ -168,8 +152,6 @@
 </div>
 
 <div class="clear"></div>
-
-
 <script src="/static/layui/layui.js"></script>
 <script src="/static/public/js/jquery.min.js?t=13"></script>
 <script src="/static/editor.md/lib/marked.min.js"></script>
@@ -202,5 +184,9 @@ $(function(){
         flowChart       : true,  // 默认不解析
         sequenceDiagram : true,  // 默认不解析
     });
+
+
+                
+
 })
 </script>
