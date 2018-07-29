@@ -40,13 +40,11 @@
                 <div class="article-content mt20 editormd-preview-theme-dark" id="art_content" style="overflow: hidden;">
                     <textarea style="display:none;" name="markdown" style="margin:0px auto;">
 [TOC]
-
                     <?=$content['content']?>
                     </textarea>
+<!-- <?=$content['html']?> -->
                 </div>
-
-                
-
+    
                 <div class="article-tags mt20">
                     <span><i class="fa fa-tags"></i></span> 
                     <?php foreach($tag as $k=>$t): ?>
@@ -170,7 +168,6 @@
 <script src="/static/editor.md/lib/jquery.flowchart.min.js"></script>
 <script src="/static/editor.md/editormd.js"></script>
 
-<script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js">
 </script>
 <script>
 //一般直接写在一个js文件中
@@ -183,9 +180,9 @@ layui.use(['layer','element','form','carousel','laypage'], function(){
 });
 
 $(function(){
-        var testEditormdView2 = editormd.markdownToHTML("art_content", {
+    var testEditormdView2 = editormd.markdownToHTML("art_content", {
         htmlDecode      : "style,script,iframe",  // you can filter tags decode
-        emoji           : true,
+        emoji           : false,
         taskList        : true,
         tex             : true,  // 默认不解析
         flowChart       : true,  // 默认不解析

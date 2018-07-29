@@ -187,6 +187,37 @@ class Home extends MY_Controller
 		$this->show('home/tags.html',$data);
 	}
 
+	public function topics()
+	{
+		$data  = $this->data;
+		$param = PU();
+		$topic_id = $param[1];
+		$this->load->model("admin/article_topic_model");
+		$this->load->model("admin/topic_model");
+		$data['article_topic'] = $this->article_topic_model->get_topic_article($topic_id);
+		$topic = $this->topic_model->getConditionData("*",'id='.$topic_id);
+		$data['topic'] = $topic[0];
+		$data['topics'] = $this->topic_model->get_topic();
+		// echo "<pre>";
+		// print_r($data);
+		// 
+		$data['web_info']['title'] = $topic[0]['title'].'_'.$data['web_info']['web_name'];
+		$data['web_info']['keywords'] = $topic[0]['title'].','.$data['web_info']['keywords'];
+		$data['web_info']['description'] = $topic[0]['detail'].'-'.$data['web_info']['description'];
+		$this->load->view('home/topics.html',$data);
+	}
+
+	public function topic()
+	{
+		$data  = $this->data;
+		$param = PU();
+		$article_id = $param[1];
+		$this->load->model("admin/article_model");
+		$article = $this->article_model->getConditionData("*",'id='.$article_id);
+		$data['content'] = $article[0];
+		$this->load->view('home/topic.html',$data);
+	}
+
 	/**
 	 * [tag_search 标签搜索页面]
 	 * @return [type] [description]

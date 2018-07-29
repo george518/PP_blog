@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title><?php 
+                if(isset($web_info['title'])){
+                    echo $web_info['title'];
+                }else{
+                    echo $web_info['web_name'];
+                }
+            ?></title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black"> 
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="keywords" content="<?=$web_info['keywords']?>">
+        <meta name="description" content="<?=$web_info['description']?>">
+
+        <link rel="stylesheet" href="/static/layui/css/layui.css">
+        <link rel="stylesheet" href="/static/home/css/topic.css" media="all">
+        <link rel="stylesheet" href="/static/font-awesome/css/font-awesome.min.css" media="all">
+    </head>
+    <body style="overflow-x:hidden">
+
+    <div class="layui-header">
+        <div style="float: left;background: #393D49;width:20%;height: 60px;line-height: 60px;color: #fff;">
+            <h1 style="font-size: 18px;margin-left: 10px;"><?=$topic['title']?></h1>
+        </div>
+        <div style="float: right;width: 80%;">
+            <ul class="layui-nav" >
+                <li class="layui-nav-item">
+                    <a href="<?=$web_info['host']?>">博客</a> 
+                </li> 
+            </ul>
+        </div>
+        
+    </div>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]--> 
+
+    <div class="layui-main layui-row" style="width: 100%;">
+        <div class="site-tree layui-col-md3 layui-hide-xs">
+            <div class="layui-form" style="height: 38px; margin: 10px 13px 0 0;padding-left: 10px;margin-bottom: 20px;">
+                <select lay-filter="topic" lay-search>
+                    <?php foreach($topics as $k=>$v):?>
+                        <option value="<?=$k?>" <?php if($topic['id']==$k):?> selected <?php endif;?>><?=$v?></option>
+                    <?php endforeach;?>
+                </select>
+            </div>
+            <ul class="layui-tree">
+                <li><h2>目录</h2></li>
+                <ul>
+                    <?php foreach($article_topic as $k=>$v):?>
+                    <li class="site-tree-noicon">
+                        <a href="###" data-type="public" data-id="<?=$v['id']?>">
+                            <cite><?=$v['title']?></cite>
+                        </a>
+                    </li>
+                    <?php endforeach;?>
+            </ul>
+            <div style="clear:both"></div>
+            <div class="copyrights">power by haodaquan.com</div>
+        </div>
+
+        <div class="site-content layui-col-md9">
+            <div class="site-content-header"><i class="fa fa-bars" aria-hidden="true" id="taggle"></i>&nbsp;&nbsp;<span id="content-title"><?=$topic['title']?> 说明</span> </div>
+            <div id="api-main">
+                <div style="margin:20px;line-height: 20px;color: #666">
+                    专题简介：<?=$topic['detail']?>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+<!--     <div class="layui-footer">
+        <div class="layui-main">
+            <p>&copy; 2018 <a href="/">PPGo_ApiAdmin</a> MIT license</p>
+        </div>
+    </div> -->
+    <script src="/static/layui/layui.js"></script>
+
+    <script>
+    layui.config({
+        base: '/' //你存放新模块的目录，注意，不是layui的模块目录
+    }).use(['element', 'layer','form','jquery'], function(){
+        var element = layui.element
+        ,layer = layui.layer;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var windowWidth    = $(document.body).outerWidth(true);
+        var windowHeight   = $(window).height();
+        var contentHeight = windowHeight-$('.layui-header').outerHeight(true);
+        $("#api-main").height(contentHeight-$('.site-content-header').outerHeight(true));
+        $(".site-tree").height(contentHeight);
+
+        form.on('select(topic)', function(data){
+            window.location.href="/topics/"+data.value;
+        });
+
+
+        $(".layui-tree").find("li a").on("click",function(){
+            var hs = $(this)
+            if (hs) {
+               $(".layui-tree").find("a").removeClass("active");
+                hs.addClass("active");
+                var title = hs.find("cite").text();
+                $("#content-title").html(title);
+                $("#api-main").load("/topic/"+hs.attr("data-id"));
+            }else{
+                //taggle
+            }
+        })
+
+        $("#taggle").on("click",function(){
+            var dis = $(".site-tree").css('display');
+            if (dis=="none") {
+                var treeWidth = $('.site-tree').outerWidth(true)
+                $(".site-content").width(windowWidth-treeWidth);
+                $(".site-tree").show();
+            }else{
+                $(".site-tree").hide();
+                $(".site-content").width(windowWidth);
+            }
+        });
+
+        form.render();
+    });
+    </script>
+    </body>
+</html>

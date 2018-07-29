@@ -62,19 +62,28 @@ class Article extends MY_Controller
     public function add()
     {
     	$this->data['cate'] = $this->category_model->get_category();
-    	$this->data['page_title'] = '新增分类';
+        $this->load->model('admin/topic_model');
+        $this->data['topic'] = $this->topic_model->get_topic();
+        $this->data['topics'] = [];
+    	$this->data['page_title'] = '新增文章';
     	$this->display('admin/article_add.html');
     }
 
     public function edit()
     {
+        // implode(, pieces)
+
     	$this->load->model($this->module.'/'.$this->model_name);
     	$model = $this->model_name;
     	$id = $this->input->get('id');
     	$article = $this->$model->getConditionData("*",'id='.(int)$id);
+        $this->load->model('admin/topic_model');
+        $this->data['topic'] = $this->topic_model->get_topic();
+        $this->load->model('admin/article_topic_model');
+        $this->data['topics'] = $this->article_topic_model->get_topic_aid($id);
     	$this->data['art'] = $article[0];
     	$this->data['cate'] = $this->category_model->get_category();
-    	$this->data['page_title'] = '编辑分类';
+    	$this->data['page_title'] = '编辑文章';
     	$this->display('admin/article_edit.html');
     }
 
@@ -135,9 +144,16 @@ class Article extends MY_Controller
         $pattern = '/\s/';//去除空白
         $content = preg_replace($pattern, '', $detail);
         $form_data['detail'] =  mb_substr($content,0,150,'utf-8');
+        $form_data['html'] =  $form_data['art-editormd-html-code'];
         // $form_data['content'] = $form_data['art-editormd-html-code'];
         unset($form_data['art-editormd-html-code']);
         unset($form_data['editormd-image-file']);
+        unset($form_data['topic']);
+
+
+        $topic = $form_data['topic_ids'];
+        unset($form_data['topic_ids']);
+
         $id  = $type = 0;
         if (isset($form_data['id'])) {
              $result = $this->$model->editData($form_data,'id='.(int)$form_data['id']);
@@ -148,13 +164,19 @@ class Article extends MY_Controller
             $id     = $result;
             $type   = 1;
         }
-
         if($result===false || $result<1)
         {
             $this->ajaxReturn($result,300,'保存失败');
         }else
         {
             $this->tag_handle($id,$form_data['tag'],$type);
+            $this->load->model('admin/article_topic_model');
+            if ($topic) {
+                $topic_id_arr = explode(",", $topic);
+                $this->article_topic_model->save_art_topic($id,$topic_id_arr,$type);
+            }else{
+                 $this->article_topic_model->editData(['status'=>1],' article_id='.$id);
+            }
             $this->ajaxReturn($result);
         }
     }

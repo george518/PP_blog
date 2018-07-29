@@ -16,6 +16,17 @@
                 </div>
                 <div class="layui-form-mid layui-word-aux">*</div>
             </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">所属专题</label>
+                <div class="layui-input-block">
+                    <?php foreach($topic as $k=>$v):?>
+                        <input type="checkbox" name="topic" title="<?=$v?>" lay-skin="primary" lay-filter="topic_id" value="<?=$k?>">
+                    <?php endforeach;?>
+                    <input type="hidden" id="topic_ids" name="topic_ids" value="">
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+            </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">标题</label>
                 <div class="layui-input-inline width40">
@@ -186,6 +197,24 @@
                         "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "datetime", "emoji", "html-entities", "pagebreak", "|",
                         "goto-line", "watch", "preview", "fullscreen", "clear", "search"]
             },
+        });
+
+
+
+        var topic_ids = [];
+       
+        form.on('checkbox(topic_id)', function(data){
+            if(data.elem.checked==true){
+                topic_ids.push(data.value)
+            }else{
+                $.each(topic_ids,function(index,item){
+                    // index是索引值（即下标）   item是每次遍历得到的值；
+                    if(item==data.value){
+                        topic_ids.splice(index,1);
+                    }
+                });
+            }
+            $("#topic_ids").val(topic_ids.join(","));
         });
 
         form.on('submit(sub)', function(data){

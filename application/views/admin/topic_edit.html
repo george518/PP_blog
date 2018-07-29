@@ -1,0 +1,80 @@
+<div class="layui-layout layui-layout-admin pp-main mt40">
+    <form class="layui-form pp-form" action="javascript:;" method="post" >  
+        <div class="layui-form-item">
+            <label class="layui-form-label">专题名称</label>
+            <div class="layui-input-inline width40">
+                <input type="text" name="title" id="title" lay-verify="required" autocomplete="off" placeholder="不超过30个字" class="layui-input" value="<?=$topic['title']?>">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">专题说明</label>
+            <div class="layui-input-inline width60">
+                <textarea name="detail"  placeholder="专题描述" class="layui-textarea"><?=$topic['detail']?></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">专题文章</label>
+            <div class="layui-input-inline width60">
+                    <table class="layui-table ">
+                      <colgroup>
+                        <col width="50">
+                        <col >
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th>排序</th>
+                          <th>文章名称</th>
+                        </tr> 
+                      </thead>
+                      <tbody>
+                        <?php foreach($article_topic as $k=>$v):?>
+                        <tr>
+                          <td><input type="text" name="sort_<?=$v['id']?>" value="<?=$v['sort']?>" lay-skin="primary" style="width: 40px; line-height: 20px;" class="layui-input"></td>
+                          <td><?=$v['title']?></td>
+                        </tr>
+                        <?php endforeach;?>
+                        
+                      </tbody>
+                    </table>
+                    
+            </div>
+        </div>
+        <input type="hidden" value="<?=$topic['id']?>" name="id">
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="sub">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="/static/layui/layui.js"></script>
+<script>
+    layui.use(['form','element','jquery','layer'], function(){
+
+        var form = layui.form;
+        var element = layui.element;
+        var $ = layui.jquery;
+        var layer = layui.layer;
+
+        form.on('submit(sub)', function(data){
+            var form_data = data.field;
+            $.post('/admin/topic/save', form_data, function (out) {
+                if (out.status == 0) {
+                    layer.msg(out.msg,{icon: 1},function () {
+                        window.location.href="/admin/topic/index";
+                    })
+                } else {
+                    layer.msg(out.msg)
+                }
+            }, "json");
+            return false;
+        });
+
+        element.render();
+
+    });
+</script>

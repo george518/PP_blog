@@ -57,4 +57,6 @@ $route['(:num)/(:num)'] = 'home/alist';
 $route['(:num)'] = 'home/content';
 $route['tags'] = 'home/tags';
 $route['tag/(:any)'] = 'home/tag_search';
+$route['topics/(:any)'] = 'home/topics';
+$route['topic/(:any)'] = 'home/topic';
 $route['search'] = 'home/search';

@@ -1,0 +1,115 @@
+    <div class="layui-layout layui-layout-admin pp-main">
+        <div class="layui-row" style="margin-top: 20px;">
+            <div class="layui-col-xs6">
+                <div class="layui-btn-group">
+                  <button class="layui-btn" id="add"><i class="fa fa-plus-circle back_space1"></i>增加</button>
+                </div>
+            </div>
+            <div class="layui-col-xs6 search_text" style="text-align: right;">
+                <form class="layui-form" action="" onsubmit="javascript:return false;">
+                    <div class="search_form">
+                        <div class="layui-inline" style="width: 40%">
+                            <input class="layui-input" name="title" id="title" autocomplete="off"  placeholder="专题名称" >
+                        </div>
+                        <button class="layui-btn" data-type="reload" id="reload"><i class="fa fa-search"></i>查询</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <table class="layui-hide" id="table_list" lay-filter="table_filter">
+        </table>
+
+        <script type="text/html" id="bar">
+            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
+
+    </div>
+
+<script src="/static/layui/layui.js"></script>
+<script>
+
+    layui.use(['table','form','element','layer'], function(){
+        var table = layui.table;
+        var form = layui.form;
+        var element = layui.element;
+        var layer = layui.layer;
+
+        //方法级渲染
+        table.render({
+            elem: '#table_list'
+            ,url: '/admin/topic/table'
+            ,method:'POST'
+            ,cols: [[
+                // {checkbox: true, fixed: true},
+                {field:'id', title: 'ID', align:'center',sort: true, width:50}
+                ,{field:'title',title: '专题名称',width:400}
+                ,{field:'detail',title: '说明'}
+                ,{field:'num',title: '文章数量'}
+                ,{fixed: 'right', width:200, align:'center', toolbar: '#bar'}
+            ]]
+            ,id: 'listReload'
+            ,page: true
+            ,height: "full-130"
+            
+        });
+
+        var $ = layui.$, active = {
+            reload: function(){
+                table.reload('listReload', {
+                    where: {
+                        'title|like' : $('#title').val()
+                    }
+                    ,page:{
+                        curr:1
+                    }
+                });
+            }
+        };
+
+        $("#add").on("click",function() {
+            layer.open({
+                title:'新增',
+                type: 2, 
+                area: ['500px', '320px'],
+                content: ['/admin/topic/add','no'], 
+            }); 
+        })
+
+
+
+        //监听工具条
+        table.on('tool(table_filter)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'edit'){
+                window.location.href ='/admin/topic/edit?id='+data.id
+                
+            }else if(obj.event === 'del'){
+                var msg = "确定要删除【"+data.title+"】吗？";
+                layer.confirm(msg, function(){
+                    var del_data = {"id":data.id}
+                    $.post('/admin/topic/del', del_data, function (out) {
+                        if (out.status == 0) {
+                            layer.msg(out.msg,{icon: 1},function () {
+                                $("#reload").click();
+                            })
+                        } else {
+                            layer.msg(out.msg)
+                        }
+                    }, "json");        
+                    return false;
+                });
+                return false;
+            }else{
+                layer.msg('操作不存在');
+            }
+        });
+
+        $('.search_form .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+
+</script>
