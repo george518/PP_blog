@@ -25,6 +25,9 @@ class Topic_model extends MY_Model
 		$where = 'status=0';
 		$topic = [];
 		$topic_ = $this->getConditionData('*',$where);
+		if (count($topic_)<1) {
+			return [];
+		}
 		foreach ($topic_ as $key => $value) {
 			$topic[$value['id']] = $value['title'];
 		}
