@@ -17,12 +17,15 @@ class Home extends MY_Controller
 		$this->load->model('home/category_model');
 		$this->load->model('home/banner_model');
 		$this->load->model('home/article_model');
+		$this->load->model('admin/topic_model');
 		$this->data['category'] = $this->category_model->get_category(1);
 		
 		$this->every_page = 10;
 
 		#左侧公共部分
 		$this->data['tags'] = $this->get_top_tag(50);
+		$this->data['topics'] = $this->topic_model->get_topic();
+
 	}
 	
 	/**
@@ -193,7 +196,7 @@ class Home extends MY_Controller
 		$param = PU();
 		$topic_id = $param[1];
 		$this->load->model("admin/article_topic_model");
-		$this->load->model("admin/topic_model");
+		
 		$data['article_topic'] = $this->article_topic_model->get_topic_article($topic_id);
 		$topic = $this->topic_model->getConditionData("*",'id='.$topic_id);
 		$data['topic'] = $topic[0];

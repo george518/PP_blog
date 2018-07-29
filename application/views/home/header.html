@@ -61,14 +61,16 @@
                     <li class="layui-nav-item"><a href="">退了</a></li> -->
                 </ul>
             </div>
+            <?php if(count($topics)>0):?>
+
             <div class="hot-tags bg-white">
                 <div class="pp-header" style="padding-left: 20px; height: 47px;">
+                    专题：
 
-                    <?php foreach($tags as $t=>$tg): ?> 
-                    <?php if($t<=10):?>
-                    <a href="/tag/<?=$tg['tag_id']?>"><?=$tg['tag_name']?></a>
-                        <?php endif;?>
+                    <?php foreach($topics as $t=>$tp): ?> 
+                    <a href="/topics/<?=$t?>"><?=$tp?></a>
                     <?php endforeach;?>
                 </div>
             </div>
+            <?php endif;?>
         </div>
