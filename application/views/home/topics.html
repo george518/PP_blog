@@ -106,11 +106,16 @@
         $(".layui-tree").find("li a").on("click",function(){
             var hs = $(this)
             if (hs) {
+                layer.load();
                $(".layui-tree").find("a").removeClass("active");
                 hs.addClass("active");
                 var title = hs.find("cite").text();
                 $("#content-title").html(title);
-                $("#api-main").load("/topic/"+hs.attr("data-id"));
+                $("#api-main").load("/topic/"+hs.attr("data-id"),function(response,status,xhr){
+                    layer.closeAll('loading');
+                });
+
+                
             }else{
                 //taggle
             }
