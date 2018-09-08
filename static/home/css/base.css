@@ -74,7 +74,7 @@
 
 	a{
 		color: #666;
-		font-size: 16px !important;
+		font-size: 12px;
 	}
 	a:hover{
 		color: #009688;
@@ -82,7 +82,7 @@
 
 	.layui-header .layui-logo a{
 		color: #009688;
-		font-size: 32px !important;
+		font-size: 24px !important;
 	}
 /*公共部分样式结束*/
 
@@ -196,7 +196,7 @@
 	}
 
 	.panel > ul > li a{
-		font-size: 14px;
+		font-size: 12px;
 		color: #666666;
 		display: block;
 		width: 100%;
